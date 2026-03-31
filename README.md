@@ -1,3 +1,19 @@
+# Israel PetConnect AI
+
+## GitHub Pages quick start
+
+This repo now includes a **plain static frontend at the repo root** so GitHub Pages can serve it immediately.
+
+1. Upload this repo to GitHub.
+2. Go to **Settings → Pages**.
+3. Choose **Deploy from a branch**.
+4. Select **main** and **/(root)**.
+5. Edit `config.js` and set `API_BASE_URL` to your deployed backend.
+
+Without `config.js`, the site renders on Pages but form submissions will not reach your backend.
+
+---
+
 # Israel PetConnect AI — production-ready foundation (v3)
 
 This version extends the prior upgrade with video-based intake, margin-loss training scaffolding, semantic attribute tagging, neighborhood volunteers, shelter intake scanning, and external social-ingest hooks.

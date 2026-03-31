@@ -1,0 +1,9 @@
+{
+  "name": "Israel PetConnect AI",
+  "short_name": "PetConnect",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f8fbff",
+  "theme_color": "#0f766e",
+  "icons": []
+}
