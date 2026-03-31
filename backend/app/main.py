@@ -440,6 +440,82 @@ async def create_lost_pet(
     }
 
 
+
+@app.post('/api/found-reports/preview')
+async def preview_found_report_matches(
+    animal_type: str = Form(...),
+    breed: str = Form(''),
+    color: str = Form(''),
+    collar_description: str = Form(''),
+    seen_location: str = Form(''),
+    city: str = Form(''),
+    neighborhood: str = Form(''),
+    latitude: str = Form(''),
+    longitude: str = Form(''),
+    notes: str = Form(''),
+    finder_name: str = Form(''),
+    finder_phone: str = Form(''),
+    finder_email: str = Form(''),
+    microchip_number: str = Form(''),
+    image: UploadFile | None = File(default=None),
+    video: UploadFile | None = File(default=None),
+    nose_image: UploadFile | None = File(default=None),
+    db: AsyncSession = Depends(get_db),
+):
+    if image is None and video is None:
+        return {'matches': [], 'best_frame': None, 'offline_safe': True}
+
+    saved, video_saved, _privacy, embedding, tags, selection = await _prepare_primary_media(
+        image,
+        video,
+        'preview_found',
+        encoder_type='primary',
+        text_fields=(animal_type, breed, color, collar_description, seen_location, city, neighborhood, notes),
+    )
+    nose_saved, _nose_privacy, nose_embedding, nose_tags = await _prepare_optional_image(nose_image, 'preview_found_nose', encoder_type='nose')
+
+    preview_report = FoundReport(
+        animal_type=animal_type,
+        breed=breed or None,
+        color=color or None,
+        collar_description=collar_description or None,
+        semantic_tags=sorted(set(tags + nose_tags)),
+        seen_location=seen_location or None,
+        city=city or None,
+        city_slug=slugify_city(city),
+        neighborhood=neighborhood or None,
+        latitude=decimal_or_none(latitude),
+        longitude=decimal_or_none(longitude),
+        notes=notes or None,
+        finder_name=finder_name or None,
+        finder_phone=normalize_phone(finder_phone) or None,
+        finder_email=finder_email or None,
+        microchip_number=normalize_microchip(microchip_number) or None,
+        nose_image_storage_key=nose_saved.storage_key if nose_saved else None,
+        nose_image_url=nose_saved.public_url if nose_saved else None,
+        video_storage_key=video_saved.storage_key if video_saved else None,
+        video_url=video_saved.public_url if video_saved else None,
+        best_frame_score=selection.get('score'),
+        best_frame_source=selection.get('source'),
+        image_storage_key=saved.storage_key,
+        image_url=saved.public_url,
+        embedding=embedding,
+        nose_embedding=nose_embedding,
+    )
+
+    matches = await find_matches(db, preview_report)
+    municipal_draft = _municipal_draft_from_report(preview_report)
+    for match in matches:
+        match.pop('contact_phone', None)
+        match.pop('contact_email', None)
+    return {
+        'matches': matches,
+        'municipal_draft': municipal_draft,
+        'offline_safe': True,
+        'best_frame': selection,
+    }
+
+
 @app.post('/api/found-reports', response_model=FoundReportResponse)
 async def create_found_report(
     animal_type: str = Form(...),
