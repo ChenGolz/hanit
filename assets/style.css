@@ -265,3 +265,37 @@ button, input, select, textarea { font: inherit; }
 
 .nav-links { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
 .button.ghost { background:#f9fbff; }
+
+.install-button { background: #ecfeff; border-color: #a5f3fc; color: #155e75; }
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.38);
+  z-index: 1000;
+}
+.loading-card {
+  min-width: min(90vw, 320px);
+  display: grid;
+  gap: 12px;
+  place-items: center;
+  padding: 22px;
+  background: #fff;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  text-align: center;
+  font-weight: 800;
+}
+.loading-dots {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 4px solid #fed7aa;
+  border-top-color: var(--brand);
+  animation: petconnect-spin .9s linear infinite;
+}
+body.loading-active { overflow: hidden; }
+@keyframes petconnect-spin { to { transform: rotate(360deg); } }

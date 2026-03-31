@@ -3,10 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PetConnect">
   <title>PetConnect Israel</title>
   <meta name="theme-color" content="#17a34a">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="stylesheet" href="../assets/style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -19,6 +23,7 @@
       <a class="brand" href="../index.html" id="brand-text">PetConnect Israel</a>
       <div class="nav-actions">
         <a class="nav-link subtle" href="../matches/" data-i18n="liveMapNav"></a>
+        <button id="install-app-button" class="button ghost install-button" type="button" data-i18n="installApp" hidden></button>
         <a class="nav-link volunteer-pill" href="../volunteer/" data-i18n="volunteerLogin"></a>
         <label class="lang-pill" for="language-select" data-i18n="language"></label>
         <select id="language-select" class="select" aria-label="language">
@@ -121,5 +126,7 @@
   </main>
 
   <footer class="footer"><div class="container" data-i18n="footer"></div></footer>
+
+  <div id="loading-spinner" class="loading-overlay" hidden><div class="loading-card"><div class="loading-dots" aria-hidden="true"></div><div data-loading-text data-i18n="scanningFace">סורק פנים...</div></div></div>
 </body>
 </html>

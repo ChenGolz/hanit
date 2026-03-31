@@ -132,6 +132,8 @@
       municipalDraft: 'טיוטת 106',
       reportSaved: 'הדיווח נשמר.',
       volunteerSaved: 'פרטי המתנדב נשמרו.',
+      installApp: 'התקן את האפליקציה לגישה מהירה',
+      scanningFace: 'סורק פנים...',
       shelterSaved: 'סריקת המקלט נשמרה.',
       loading: 'טוען...',
       none: 'אין עדיין נתונים.',
@@ -152,16 +154,19 @@
       lostBig: 'I lost a pet', lostSmall: 'Blue = owner report', foundBig: 'I saw a stray animal', foundSmall: 'Green = finder report',
       featureCamera: 'Built-in camera flow', featureCameraText: 'One tap opens direct capture with thumb-friendly touch targets.', featureGeo: 'Automatic location', featureGeoText: 'Use Geolocation to fill coordinates and location while reporting.', featureInstant: 'Instant similar results', featureInstantText: 'The Found flow shows possible matches before final submit.',
       liveMapTitle: 'Live map of reports from the last hour', liveMapText: 'Quick visibility into the freshest sightings.', openMap: 'Open full map', storiesTitle: 'Recently reunited', storiesText: 'Successful reunions build trust and hope.', cityTitle: 'City pages', cityText: 'Fast landing pages for major cities in Israel.', footer: 'Static GitHub Pages build • AI, DB, SMS, and alerts still require an external backend', apiBase: 'API base URL', apiWarning: 'To make forms and matching work, edit config.js with your backend URL.',
-      foundTitleNew: 'I saw a stray animal', foundSubtitle: 'Fast mobile report with possible matches shown while uploading.', lostTitleNew: 'I lost a pet', lostSubtitle: 'Smart form with location, private markers, and ownership verification.', step1of3: 'Step 1 of 3', stepFoundLabel: 'Photo and details', stepLostLabel: 'Identity and owner details', photoTipTitle: 'Photo tip', photoTip: 'Try shooting from the animal’s height in daylight. A sharp face photo improves matching.', image: 'Photo', video: 'Short video', nosePhoto: 'Nose-up photo', privateMarkerPhoto: 'Private marker photo', animalType: 'Animal type', breed: 'Breed', color: 'Color', collar: 'Collar description', name: 'Pet name', markings: 'Unique markings', city: 'City', neighborhood: 'Neighborhood', location: 'Location', notes: 'Notes', finderName: 'Finder name', contactName: 'Contact name', phone: 'Phone', email: 'Email', microchip: 'Microchip number', verificationPrompt: 'Private verification question', verificationAnswer: 'Verification answer', privateMarkerPrompt: 'Private physical marker', verificationQuizHint: 'Example: “Does the dog have a white spot on the back paw?”', saveFound: 'Submit found report', saveLost: 'Submit lost report', saveVolunteer: 'Save volunteer', runShelter: 'Run scan', useLocation: 'Use my location', bestFrame: 'If you upload video, the backend can choose the best frame automatically.', possibleMatches: 'Possible matches', instantPreviewTitle: 'Checking similar reports already', instantPreviewText: 'After choosing a photo, similar reports can show up before final submit.', instantMatchHint: 'This panel updates from image, city, and breed.', instantWaiting: 'Choose a photo to start a quick match preview.', previewEmpty: 'Your photo preview will appear here', previewLoading: 'Checking matches...', previewUnavailable: 'Live previews require a backend preview endpoint.', noMatchesYet: 'No strong matches yet.', recentReports: 'Relevant reports', communityTrustTitle: 'Trust and community', trust1: 'Masked contact channels', trust1t: 'Owner and finder contact can stay protected.', trust2: 'Ownership verification', trust2t: 'A private question and marker reduce pet flipping.', trust3: 'Volunteer network', trust3t: 'Neighborhood responders can get priority alerts nearby.', municipalDraft: '106 draft', reportSaved: 'Report saved.', volunteerSaved: 'Volunteer saved.', shelterSaved: 'Shelter scan saved.', loading: 'Loading...', none: 'No data yet.', sourcePlatform: 'Source platform', radiusKm: 'Radius km', shelterName: 'Shelter / authority name', matchesTitle: 'Active reports', volunteerTitle: 'Neighborhood volunteer', shelterTitle: 'Shelter intake scan'
+      foundTitleNew: 'I saw a stray animal', foundSubtitle: 'Fast mobile report with possible matches shown while uploading.', lostTitleNew: 'I lost a pet', lostSubtitle: 'Smart form with location, private markers, and ownership verification.', step1of3: 'Step 1 of 3', stepFoundLabel: 'Photo and details', stepLostLabel: 'Identity and owner details', photoTipTitle: 'Photo tip', photoTip: 'Try shooting from the animal’s height in daylight. A sharp face photo improves matching.', image: 'Photo', video: 'Short video', nosePhoto: 'Nose-up photo', privateMarkerPhoto: 'Private marker photo', animalType: 'Animal type', breed: 'Breed', color: 'Color', collar: 'Collar description', name: 'Pet name', markings: 'Unique markings', city: 'City', neighborhood: 'Neighborhood', location: 'Location', notes: 'Notes', finderName: 'Finder name', contactName: 'Contact name', phone: 'Phone', email: 'Email', microchip: 'Microchip number', verificationPrompt: 'Private verification question', verificationAnswer: 'Verification answer', privateMarkerPrompt: 'Private physical marker', verificationQuizHint: 'Example: “Does the dog have a white spot on the back paw?”', saveFound: 'Submit found report', saveLost: 'Submit lost report', saveVolunteer: 'Save volunteer', runShelter: 'Run scan', useLocation: 'Use my location', bestFrame: 'If you upload video, the backend can choose the best frame automatically.', possibleMatches: 'Possible matches', instantPreviewTitle: 'Checking similar reports already', instantPreviewText: 'After choosing a photo, similar reports can show up before final submit.', instantMatchHint: 'This panel updates from image, city, and breed.', instantWaiting: 'Choose a photo to start a quick match preview.', previewEmpty: 'Your photo preview will appear here', previewLoading: 'Checking matches...', previewUnavailable: 'Live previews require a backend preview endpoint.', noMatchesYet: 'No strong matches yet.', recentReports: 'Relevant reports', communityTrustTitle: 'Trust and community', trust1: 'Masked contact channels', trust1t: 'Owner and finder contact can stay protected.', trust2: 'Ownership verification', trust2t: 'A private question and marker reduce pet flipping.', trust3: 'Volunteer network', trust3t: 'Neighborhood responders can get priority alerts nearby.', municipalDraft: '106 draft', reportSaved: 'Report saved.', volunteerSaved: 'Volunteer saved.', installApp: 'Install app for quick access', scanningFace: 'Scanning face...', shelterSaved: 'Shelter scan saved.', loading: 'Loading...', none: 'No data yet.', sourcePlatform: 'Source platform', radiusKm: 'Radius km', shelterName: 'Shelter / authority name', matchesTitle: 'Active reports', volunteerTitle: 'Neighborhood volunteer', shelterTitle: 'Shelter intake scan'
     },
     ar: {
       brand: 'PetConnect Israel', language: 'اللغة', liveMapNav: 'الخريطة الحية', volunteerLogin: 'دخول المتطوع',
-      heroBadge: '🐾 الوقت حاسم — بلّغ من هاتفك خلال ثوانٍ', heroTitle: 'إذا رأيت حيوانًا شاردًا الآن، ابدأ بالكاميرا لا بنموذج طويل.', heroText: 'هذه النسخة مبنية أولًا للهاتف: أزرار طوارئ واضحة، فتح مباشر للكاميرا، تحديد موقع تلقائي، ومعاينة تطابقات أثناء تعبئة البلاغ.', searchLabel: 'ابحث حسب المدينة أو نوع الحيوان', searchPlaceholder: 'مثال: تل أبيب، هاسكي، قط أبيض', searchButton: 'بحث', emergencyEyebrow: 'بلاغ طارئ', emergencyTitle: 'وجدت كلبًا الآن!', emergencyText: 'هذا الزر يفتح كاميرا الهاتف مباشرة وينقلك إلى البلاغ السريع.', emergencyButton: '📸 افتح الكاميرا الآن', lostBig: 'فقدت حيوانًا', lostSmall: 'الأزرق = بلاغ مالك', foundBig: 'رأيت حيوانًا شاردًا', foundSmall: 'الأخضر = بلاغ مُبلّغ', featureCamera: 'كاميرا مدمجة', featureCameraText: 'ضغطة واحدة تفتح الالتقاط المباشر مع أزرار كبيرة ومريحة.', featureGeo: 'موقع تلقائي', featureGeoText: 'استخدم تحديد الموقع لملء الإحداثيات والمكان أثناء البلاغ.', featureInstant: 'نتائج فورية مشابهة', featureInstantText: 'صفحة العثور تعرض تطابقات محتملة قبل الإرسال النهائي.', liveMapTitle: 'خريطة حية لبلاغات الساعة الأخيرة', liveMapText: 'رؤية سريعة لأحدث المشاهدات.', openMap: 'افتح الخريطة الكاملة', storiesTitle: 'عادوا مؤخرًا إلى البيت', storiesText: 'القصص الناجحة تبني الثقة والأمل.', cityTitle: 'صفحات المدن', cityText: 'صفحات سريعة للمدن الرئيسية في إسرائيل.', footer: 'نسخة ثابتة لـ GitHub Pages • الذكاء الاصطناعي وقاعدة البيانات والتنبيهات تحتاج Backend خارجي', apiBase: 'رابط الخادم', apiWarning: 'لكي تعمل النماذج والتطابقات، عدّل config.js وضع رابط الخادم.', foundTitleNew: 'رأيت حيوانًا شاردًا', foundSubtitle: 'بلاغ سريع للهاتف مع تطابقات محتملة أثناء رفع الصورة.', lostTitleNew: 'فقدت حيوانًا', lostSubtitle: 'نموذج ذكي مع الموقع وعلامات خاصة وأسئلة تحقق.', step1of3: 'الخطوة 1 من 3', stepFoundLabel: 'الصورة والتفاصيل', stepLostLabel: 'هوية الحيوان وبيانات المالك', photoTipTitle: 'نصيحة تصوير', photoTip: 'حاول التصوير من مستوى الحيوان وفي ضوء النهار. صورة واضحة للوجه تحسن التطابق.', image: 'صورة', video: 'فيديو قصير', nosePhoto: 'صورة مقربة للأنف', privateMarkerPhoto: 'صورة خاصة لعلامة مميزة', animalType: 'نوع الحيوان', breed: 'السلالة', color: 'اللون', collar: 'وصف الطوق', name: 'اسم الحيوان', markings: 'علامات مميزة', city: 'المدينة', neighborhood: 'الحي', location: 'الموقع', notes: 'ملاحظات', finderName: 'اسم المُبلّغ', contactName: 'اسم جهة الاتصال', phone: 'الهاتف', email: 'البريد الإلكتروني', microchip: 'رقم الشريحة', verificationPrompt: 'سؤال تحقق خاص', verificationAnswer: 'إجابة التحقق', privateMarkerPrompt: 'علامة جسدية خاصة', verificationQuizHint: 'مثال: هل توجد بقعة بيضاء في القدم الخلفية؟', saveFound: 'إرسال بلاغ العثور', saveLost: 'إرسال بلاغ الفقدان', saveVolunteer: 'حفظ المتطوع', runShelter: 'بدء المسح', useLocation: 'استخدم موقعي', bestFrame: 'عند رفع فيديو يمكن للخادم اختيار أفضل لقطة تلقائيًا.', possibleMatches: 'تطابقات محتملة', instantPreviewTitle: 'نفحص التقارير المشابهة الآن', instantPreviewText: 'بعد اختيار الصورة يمكن أن تظهر نتائج مشابهة قبل الإرسال النهائي.', instantMatchHint: 'هذه اللوحة تتحدث وفق الصورة والمدينة والسلالة.', instantWaiting: 'اختر صورة لبدء معاينة سريعة.', previewEmpty: 'ستظهر معاينة الصورة هنا', previewLoading: 'جارٍ فحص التطابقات...', previewUnavailable: 'المعاينة الحية تحتاج endpoint للمعاينة في الخادم.', noMatchesYet: 'لا توجد تطابقات قوية حاليًا.', recentReports: 'تقارير ذات صلة', communityTrustTitle: 'الثقة والمجتمع', trust1: 'قنوات اتصال محمية', trust1t: 'يمكن حماية التواصل بين المالك والواجد.', trust2: 'تحقق من الملكية', trust2t: 'سؤال خاص وعلامة مميزة يقللان الاحتيال.', trust3: 'شبكة متطوعين', trust3t: 'متطوعو الأحياء يمكنهم تلقي تنبيهات قريبة.', municipalDraft: 'مسودة 106', reportSaved: 'تم حفظ البلاغ.', volunteerSaved: 'تم حفظ بيانات المتطوع.', shelterSaved: 'تم حفظ مسح الملجأ.', loading: 'جارٍ التحميل...', none: 'لا توجد بيانات بعد.', sourcePlatform: 'المنصة', radiusKm: 'نطاق كم', shelterName: 'اسم الملجأ / السلطة', matchesTitle: 'بلاغات نشطة', volunteerTitle: 'متطوع الحي', shelterTitle: 'مسح استقبال الملجأ'
+      heroBadge: '🐾 الوقت حاسم — بلّغ من هاتفك خلال ثوانٍ', heroTitle: 'إذا رأيت حيوانًا شاردًا الآن، ابدأ بالكاميرا لا بنموذج طويل.', heroText: 'هذه النسخة مبنية أولًا للهاتف: أزرار طوارئ واضحة، فتح مباشر للكاميرا، تحديد موقع تلقائي، ومعاينة تطابقات أثناء تعبئة البلاغ.', searchLabel: 'ابحث حسب المدينة أو نوع الحيوان', searchPlaceholder: 'مثال: تل أبيب، هاسكي، قط أبيض', searchButton: 'بحث', emergencyEyebrow: 'بلاغ طارئ', emergencyTitle: 'وجدت كلبًا الآن!', emergencyText: 'هذا الزر يفتح كاميرا الهاتف مباشرة وينقلك إلى البلاغ السريع.', emergencyButton: '📸 افتح الكاميرا الآن', lostBig: 'فقدت حيوانًا', lostSmall: 'الأزرق = بلاغ مالك', foundBig: 'رأيت حيوانًا شاردًا', foundSmall: 'الأخضر = بلاغ مُبلّغ', featureCamera: 'كاميرا مدمجة', featureCameraText: 'ضغطة واحدة تفتح الالتقاط المباشر مع أزرار كبيرة ومريحة.', featureGeo: 'موقع تلقائي', featureGeoText: 'استخدم تحديد الموقع لملء الإحداثيات والمكان أثناء البلاغ.', featureInstant: 'نتائج فورية مشابهة', featureInstantText: 'صفحة العثور تعرض تطابقات محتملة قبل الإرسال النهائي.', liveMapTitle: 'خريطة حية لبلاغات الساعة الأخيرة', liveMapText: 'رؤية سريعة لأحدث المشاهدات.', openMap: 'افتح الخريطة الكاملة', storiesTitle: 'عادوا مؤخرًا إلى البيت', storiesText: 'القصص الناجحة تبني الثقة والأمل.', cityTitle: 'صفحات المدن', cityText: 'صفحات سريعة للمدن الرئيسية في إسرائيل.', footer: 'نسخة ثابتة لـ GitHub Pages • الذكاء الاصطناعي وقاعدة البيانات والتنبيهات تحتاج Backend خارجي', apiBase: 'رابط الخادم', apiWarning: 'لكي تعمل النماذج والتطابقات، عدّل config.js وضع رابط الخادم.', foundTitleNew: 'رأيت حيوانًا شاردًا', foundSubtitle: 'بلاغ سريع للهاتف مع تطابقات محتملة أثناء رفع الصورة.', lostTitleNew: 'فقدت حيوانًا', lostSubtitle: 'نموذج ذكي مع الموقع وعلامات خاصة وأسئلة تحقق.', step1of3: 'الخطوة 1 من 3', stepFoundLabel: 'الصورة والتفاصيل', stepLostLabel: 'هوية الحيوان وبيانات المالك', photoTipTitle: 'نصيحة تصوير', photoTip: 'حاول التصوير من مستوى الحيوان وفي ضوء النهار. صورة واضحة للوجه تحسن التطابق.', image: 'صورة', video: 'فيديو قصير', nosePhoto: 'صورة مقربة للأنف', privateMarkerPhoto: 'صورة خاصة لعلامة مميزة', animalType: 'نوع الحيوان', breed: 'السلالة', color: 'اللون', collar: 'وصف الطوق', name: 'اسم الحيوان', markings: 'علامات مميزة', city: 'المدينة', neighborhood: 'الحي', location: 'الموقع', notes: 'ملاحظات', finderName: 'اسم المُبلّغ', contactName: 'اسم جهة الاتصال', phone: 'الهاتف', email: 'البريد الإلكتروني', microchip: 'رقم الشريحة', verificationPrompt: 'سؤال تحقق خاص', verificationAnswer: 'إجابة التحقق', privateMarkerPrompt: 'علامة جسدية خاصة', verificationQuizHint: 'مثال: هل توجد بقعة بيضاء في القدم الخلفية؟', saveFound: 'إرسال بلاغ العثور', saveLost: 'إرسال بلاغ الفقدان', saveVolunteer: 'حفظ المتطوع', runShelter: 'بدء المسح', useLocation: 'استخدم موقعي', bestFrame: 'عند رفع فيديو يمكن للخادم اختيار أفضل لقطة تلقائيًا.', possibleMatches: 'تطابقات محتملة', instantPreviewTitle: 'نفحص التقارير المشابهة الآن', instantPreviewText: 'بعد اختيار الصورة يمكن أن تظهر نتائج مشابهة قبل الإرسال النهائي.', instantMatchHint: 'هذه اللوحة تتحدث وفق الصورة والمدينة والسلالة.', instantWaiting: 'اختر صورة لبدء معاينة سريعة.', previewEmpty: 'ستظهر معاينة الصورة هنا', previewLoading: 'جارٍ فحص التطابقات...', previewUnavailable: 'المعاينة الحية تحتاج endpoint للمعاينة في الخادم.', noMatchesYet: 'لا توجد تطابقات قوية حاليًا.', recentReports: 'تقارير ذات صلة', communityTrustTitle: 'الثقة والمجتمع', trust1: 'قنوات اتصال محمية', trust1t: 'يمكن حماية التواصل بين المالك والواجد.', trust2: 'تحقق من الملكية', trust2t: 'سؤال خاص وعلامة مميزة يقللان الاحتيال.', trust3: 'شبكة متطوعين', trust3t: 'متطوعو الأحياء يمكنهم تلقي تنبيهات قريبة.', municipalDraft: 'مسودة 106', reportSaved: 'تم حفظ البلاغ.', volunteerSaved: 'تم حفظ بيانات المتطوع.', installApp: 'ثبّت التطبيق للوصول السريع', scanningFace: 'جارٍ فحص الوجه...', shelterSaved: 'تم حفظ مسح الملجأ.', loading: 'جارٍ التحميل...', none: 'لا توجد بيانات بعد.', sourcePlatform: 'المنصة', radiusKm: 'نطاق كم', shelterName: 'اسم الملجأ / السلطة', matchesTitle: 'بلاغات نشطة', volunteerTitle: 'متطوع الحي', shelterTitle: 'مسح استقبال الملجأ'
     }
   };
 
   let livePreviewTimer = null;
   let pendingCapturedImage = null;
+  let installPromptEvent = null;
+  let loadingCounter = 0;
+  const preparedImages = new WeakMap();
 
   function apiBase() {
     return (window.PETCONNECT_CONFIG && window.PETCONNECT_CONFIG.API_BASE_URL || '').replace(/\/$/, '');
@@ -241,10 +246,78 @@
     return new Blob([arr], { type: mime });
   }
 
+  function loadingEl() { return document.getElementById('loading-spinner'); }
+
+  function showLoading(key) {
+    loadingCounter += 1;
+    const el = loadingEl();
+    if (!el) return;
+    const text = el.querySelector('[data-loading-text]');
+    if (text && key) text.textContent = t(key);
+    el.hidden = false;
+    document.body.classList.add('loading-active');
+  }
+
+  function hideLoading() {
+    loadingCounter = Math.max(0, loadingCounter - 1);
+    if (loadingCounter > 0) return;
+    const el = loadingEl();
+    if (el) el.hidden = true;
+    document.body.classList.remove('loading-active');
+  }
+
+  function readImage(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+      img.onerror = (err) => { URL.revokeObjectURL(url); reject(err); };
+      img.src = url;
+    });
+  }
+
+  async function compressImageFile(file, options = {}) {
+    if (!(file instanceof File) || !String(file.type || '').startsWith('image/')) return file;
+    const { maxWidth = 800, maxHeight = 800, quality = 0.82 } = options;
+    let image;
+    try { image = await readImage(file); } catch { return file; }
+    const width = image.naturalWidth || image.width;
+    const height = image.naturalHeight || image.height;
+    if (!width || !height) return file;
+    const scale = Math.min(1, maxWidth / width, maxHeight / height);
+    const targetWidth = Math.max(1, Math.round(width * scale));
+    const targetHeight = Math.max(1, Math.round(height * scale));
+    if (scale === 1 && file.size <= 900 * 1024) return file;
+    const canvas = document.createElement('canvas');
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return file;
+    ctx.drawImage(image, 0, 0, targetWidth, targetHeight);
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
+    if (!blob) return file;
+    if (blob.size >= file.size && scale === 1) return file;
+    const compressedName = (file.name || 'upload').replace(/\.[^.]+$/, '') + '.jpg';
+    return new File([blob], compressedName, { type: 'image/jpeg', lastModified: Date.now() });
+  }
+
+  async function prepareImageInput(input, options = {}) {
+    const file = input?.files?.[0];
+    if (!file) { preparedImages.delete(input); return null; }
+    const compressed = await compressImageFile(file, options);
+    preparedImages.set(input, compressed);
+    return compressed;
+  }
+
+  function getPreparedFile(input) {
+    if (!input) return null;
+    return preparedImages.get(input) || input.files?.[0] || null;
+  }
+
   function showImagePreview(input) {
     const box = input.closest('form')?.querySelector('[data-image-preview]');
     if (!box) return;
-    const file = input.files?.[0];
+    const file = getPreparedFile(input) || input.files?.[0];
     if (!file) { box.innerHTML = `<span>${escapeHtml(t(box.dataset.i18nEmpty || 'previewEmpty'))}</span>`; return; }
     const url = URL.createObjectURL(file);
     box.innerHTML = `<img src="${url}" alt="preview">`;
@@ -258,9 +331,28 @@
       input.addEventListener('change', async () => {
         const file = input.files?.[0];
         if (!file) return;
-        const dataUrl = await readFileAsDataURL(file);
-        sessionStorage.setItem('petconnect_captured_image', JSON.stringify({ dataUrl, name: file.name || 'capture.jpg', type: file.type || 'image/jpeg' }));
-        location.href = relativePrefix() + 'found-pet/?captured=1';
+        showLoading('scanningFace');
+        try {
+          const compressed = await compressImageFile(file);
+          let coords = null;
+          try {
+            const pos = await getCurrentPosition();
+            coords = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
+          } catch {
+            coords = null;
+          }
+          const dataUrl = await readFileAsDataURL(compressed);
+          sessionStorage.setItem('petconnect_captured_image', JSON.stringify({
+            dataUrl,
+            name: compressed.name || 'capture.jpg',
+            type: compressed.type || 'image/jpeg',
+            latitude: coords?.latitude ?? null,
+            longitude: coords?.longitude ?? null
+          }));
+          location.href = relativePrefix() + 'found-pet/?captured=1';
+        } finally {
+          hideLoading();
+        }
       });
     }
 
@@ -271,6 +363,8 @@
       pendingCapturedImage = new File([dataURLtoBlob(data.dataUrl)], data.name || 'capture.jpg', { type: data.type || 'image/jpeg' });
       const box = document.querySelector('[data-image-preview]');
       if (box) box.innerHTML = `<img src="${data.dataUrl}" alt="preview">`;
+      const form = document.getElementById('found-form');
+      if (form && data.latitude && data.longitude) fillLocationFields(form, { latitude: data.latitude, longitude: data.longitude }, false);
       const note = document.querySelector('#found-form .notice');
       if (note) setNotice(note, 'ok', 'התמונה מהמצלמה נטענה. אפשר להשלים את הפרטים ולשלוח.');
       scheduleLivePreview();
@@ -293,22 +387,47 @@
     el.textContent = text || '';
   }
 
+  function fillLocationFields(form, coords, force = false) {
+    if (!form || !coords) return;
+    const lat = String(Number(coords.latitude).toFixed(6));
+    const lng = String(Number(coords.longitude).toFixed(6));
+    const latField = form.querySelector('[name="latitude"]');
+    const lngField = form.querySelector('[name="longitude"]');
+    const locField = form.querySelector('[name="seen_location"], [name="last_seen_location"]');
+    if (latField && (force || !latField.value)) latField.value = lat;
+    if (lngField && (force || !lngField.value)) lngField.value = lng;
+    if (locField && (force || !locField.value)) locField.value = `${lat}, ${lng}`;
+  }
+
+  function getCurrentPosition(options = {}) {
+    return new Promise((resolve, reject) => {
+      if (!navigator.geolocation) { reject(new Error('Geolocation unavailable')); return; }
+      navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 6500, maximumAge: 0, ...options });
+    });
+  }
+
+  async function captureLocationForForm(form, force = false) {
+    if (!form || !navigator.geolocation) return null;
+    const latField = form.querySelector('[name="latitude"]');
+    const lngField = form.querySelector('[name="longitude"]');
+    if (!force && latField?.value && lngField?.value) return { latitude: Number(latField.value), longitude: Number(lngField.value) };
+    try {
+      const pos = await getCurrentPosition();
+      const coords = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
+      fillLocationFields(form, coords, force);
+      scheduleLivePreview();
+      return coords;
+    } catch {
+      return null;
+    }
+  }
+
   async function useLocation(button) {
     const form = button.closest('form');
-    if (!form || !navigator.geolocation) return;
+    if (!form) return;
     button.disabled = true;
-    navigator.geolocation.getCurrentPosition(pos => {
-      const lat = String(pos.coords.latitude.toFixed(6));
-      const lng = String(pos.coords.longitude.toFixed(6));
-      const latField = form.querySelector('[name="latitude"]');
-      const lngField = form.querySelector('[name="longitude"]');
-      if (latField) latField.value = lat;
-      if (lngField) lngField.value = lng;
-      const locField = form.querySelector('[name="seen_location"], [name="last_seen_location"]');
-      if (locField && !locField.value) locField.value = `${lat}, ${lng}`;
-      button.disabled = false;
-      scheduleLivePreview();
-    }, () => { button.disabled = false; });
+    await captureLocationForForm(form, true);
+    button.disabled = false;
   }
 
   function initGeolocate() { document.querySelectorAll('[data-use-location]').forEach(btn => btn.addEventListener('click', () => useLocation(btn))); }
@@ -352,9 +471,20 @@
   async function postMultipart(form, endpoint, successMsg) {
     const note = form.querySelector('.notice');
     if (!apiReady()) { setNotice(note, 'warn', t('apiWarning')); return; }
+    showLoading('scanningFace');
     const fd = new FormData(form);
     if (form.id === 'found-form' && pendingCapturedImage && !fd.get('image')?.name) fd.set('image', pendingCapturedImage, pendingCapturedImage.name);
+    for (const name of ['image', 'nose_image', 'private_marker_image']) {
+      const input = form.querySelector(`input[name="${name}"]`);
+      const prepared = getPreparedFile(input);
+      if (prepared) fd.set(name, prepared, prepared.name);
+    }
     try {
+      if ((form.id === 'found-form' || form.id === 'lost-form') && (!fd.get('latitude') || !fd.get('longitude'))) await captureLocationForForm(form, false);
+      const latField = form.querySelector('[name="latitude"]');
+      const lngField = form.querySelector('[name="longitude"]');
+      if (latField?.value) fd.set('latitude', latField.value);
+      if (lngField?.value) fd.set('longitude', lngField.value);
       const res = await fetch(apiBase() + endpoint, { method: 'POST', body: fd });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Request failed');
@@ -362,11 +492,13 @@
       renderApiResult(form, data);
       if (form.id === 'found-form') sessionStorage.removeItem('petconnect_captured_image');
     } catch (err) { setNotice(note, 'err', err.message || 'Request failed'); }
+    finally { hideLoading(); }
   }
 
   async function postJson(form, endpoint, successMsg) {
     const note = form.querySelector('.notice');
     if (!apiReady()) { setNotice(note, 'warn', t('apiWarning')); return; }
+    showLoading('loading');
     const body = Object.fromEntries(new FormData(form).entries());
     ['latitude', 'longitude', 'radius_km'].forEach(k => { if (body[k] === '') delete body[k]; else if (body[k] != null) body[k] = Number(body[k]); });
     try {
@@ -376,6 +508,7 @@
       setNotice(note, 'ok', successMsg);
       renderApiResult(form, data);
     } catch (err) { setNotice(note, 'err', err.message || 'Request failed'); }
+    finally { hideLoading(); }
   }
 
   function renderMatchCard(match) {
@@ -406,12 +539,13 @@
     const status = document.querySelector('[data-live-match-status]');
     if (!form || !box || !status) return;
     const fd = new FormData(form);
-    const file = form.querySelector('input[name="image"]')?.files?.[0] || pendingCapturedImage;
+    const imageInput = form.querySelector('input[name="image"]');
+    const file = getPreparedFile(imageInput) || pendingCapturedImage;
     const video = form.querySelector('input[name="video"]')?.files?.[0];
     if (!file && !video) { status.className = 'empty'; status.textContent = t('instantWaiting'); box.innerHTML = ''; return; }
     if (!apiReady()) { status.className = 'empty'; status.textContent = t('previewUnavailable'); box.innerHTML = ''; return; }
     status.className = 'empty'; status.textContent = t('previewLoading');
-    if (file && !fd.get('image')?.name) fd.set('image', file, file.name);
+    if (file) fd.set('image', file, file.name);
     try {
       let res = await fetch(apiBase() + '/api/found-reports/preview', { method: 'POST', body: fd });
       if (res.status === 404) {
@@ -446,18 +580,38 @@
   function initFoundPreviewHooks() {
     const form = document.getElementById('found-form');
     if (!form) return;
-    ['change', 'input'].forEach(evt => form.addEventListener(evt, e => {
+    form.addEventListener('change', async e => {
       const target = e.target;
       if (!(target instanceof HTMLElement)) return;
+      if (target.matches('input[name="image"]')) {
+        showLoading('loading');
+        try {
+          await prepareImageInput(target);
+          showImagePreview(target);
+          await captureLocationForForm(form, false);
+        } finally { hideLoading(); }
+      }
       if (target.matches('input[name="image"], input[name="video"], input[name="city"], select[name="breed"], select[name="animal_type"], input[name="microchip_number"]')) scheduleLivePreview();
-      if (target.matches('input[name="image"]')) showImagePreview(target);
-    }));
+    });
+    form.addEventListener('input', e => {
+      const target = e.target;
+      if (!(target instanceof HTMLElement)) return;
+      if (target.matches('input[name="city"], select[name="breed"], select[name="animal_type"], input[name="microchip_number"]')) scheduleLivePreview();
+    });
   }
 
   function initLostPreviewHooks() {
+    const form = document.getElementById('lost-form');
     const input = document.getElementById('lost-image');
-    if (!input) return;
-    input.addEventListener('change', () => showImagePreview(input));
+    if (!form || !input) return;
+    input.addEventListener('change', async () => {
+      showLoading('loading');
+      try {
+        await prepareImageInput(input);
+        showImagePreview(input);
+        await captureLocationForForm(form, false);
+      } finally { hideLoading(); }
+    });
   }
 
   async function fetchRecentReports() {
@@ -542,6 +696,27 @@
 
   function initPwa() { if ('serviceWorker' in navigator) navigator.serviceWorker.register(relativePrefix() + 'sw.js').catch(() => {}); }
 
+  function initInstallPrompt() {
+    const button = document.getElementById('install-app-button');
+    if (!button) return;
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      installPromptEvent = event;
+      button.hidden = false;
+    });
+    button.addEventListener('click', async () => {
+      if (!installPromptEvent) return;
+      installPromptEvent.prompt();
+      try { await installPromptEvent.userChoice; } catch {}
+      installPromptEvent = null;
+      button.hidden = true;
+    });
+    window.addEventListener('appinstalled', () => {
+      installPromptEvent = null;
+      button.hidden = true;
+    });
+  }
+
   function initLang() {
     const select = document.getElementById('language-select');
     if (select) select.addEventListener('change', e => setLang(e.target.value));
@@ -559,6 +734,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    initLang(); initConfigEcho(); initSearch(); initStoredCapture(); initOpenCameraButtons(); initGeolocate(); initBreedPickers(); initMaps(); initForms(); initFoundPreviewHooks(); initLostPreviewHooks(); loadMatches(); renderStories(); renderCityGrid(); renderCityPageMeta(); initPwa();
+    initLang(); initConfigEcho(); initSearch(); initStoredCapture(); initOpenCameraButtons(); initGeolocate(); initBreedPickers(); initMaps(); initForms(); initFoundPreviewHooks(); initLostPreviewHooks(); loadMatches(); renderStories(); renderCityGrid(); renderCityPageMeta(); initPwa(); initInstallPrompt();
   });
 })();
