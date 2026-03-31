@@ -1,4 +1,4 @@
-const CACHE_NAME = 'petconnect-static-v5';
+const CACHE_NAME = 'petconnect-static-v6';
 const APP_SHELL = [
   './',
   './index.html',
@@ -41,37 +41,29 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(
-      keys
-        .filter(key => key.startsWith('petconnect-static-') && key !== CACHE_NAME)
-        .map(key => caches.delete(key))
-    );
+    await Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)));
     await self.clients.claim();
   })());
 });
+
+async function cacheFirst(request) {
+  const cached = await caches.match(request);
+  if (cached) return cached;
+  const fresh = await fetch(request);
+  const cache = await caches.open(CACHE_NAME);
+  cache.put(request, fresh.clone());
+  return fresh;
+}
 
 async function networkFirst(request) {
   try {
     const fresh = await fetch(request);
     const cache = await caches.open(CACHE_NAME);
-    if (fresh && fresh.ok) cache.put(request, fresh.clone());
+    cache.put(request, fresh.clone());
     return fresh;
   } catch {
     return (await caches.match(request)) || (await caches.match('./index.html'));
   }
-}
-
-async function staleWhileRevalidate(request) {
-  const cache = await caches.open(CACHE_NAME);
-  const cached = await cache.match(request);
-  const fetchPromise = fetch(request)
-    .then(response => {
-      if (response && response.ok) cache.put(request, response.clone());
-      return response;
-    })
-    .catch(() => null);
-
-  return cached || fetchPromise || (await caches.match('./index.html'));
 }
 
 self.addEventListener('fetch', event => {
@@ -84,6 +76,6 @@ self.addEventListener('fetch', event => {
   }
 
   if (url.origin === self.location.origin || REMOTE_ASSETS.includes(event.request.url)) {
-    event.respondWith(staleWhileRevalidate(event.request));
+    event.respondWith(cacheFirst(event.request).catch(() => caches.match('./index.html')));
   }
 });
