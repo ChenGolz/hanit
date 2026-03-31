@@ -68,3 +68,31 @@ MUNICIPAL_106_RECIPIENTS_JSON={"tel-aviv":"animals@example.org","haifa":"106@exa
 
 ## Privacy note
 The blur pipeline remains an on-upload mitigation layer for human faces and plate-like regions. It is practical, but not a perfect detector.
+
+
+## GitHub Pages frontend deployment
+
+This repo now includes a GitHub Pages-ready static frontend build.
+
+### What can run on GitHub Pages
+- `frontend/` only, as a static Next.js export.
+- The backend, PostgreSQL/pgvector, video processing, model inference, OTP/SMS hooks, and storage must stay on a separate host.
+
+### Required environment variables
+In your GitHub repository settings, add these repository variables:
+
+- `NEXT_PUBLIC_API_BASE_URL` = your hosted FastAPI base URL, for example `https://api.petconnect.co.il`
+- `NEXT_PUBLIC_BASE_PATH` = `/<repo-name>` for a project site, or leave empty for a custom domain at the root
+
+### Deployment
+- Enable GitHub Pages with GitHub Actions as the source.
+- Push to `main`.
+- The workflow at `.github/workflows/github-pages.yml` will build `frontend/out` and publish it.
+
+### Local static-export test
+```bash
+cd frontend
+npm install
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8001 npm run build
+```
+The static site will be written to `frontend/out/`.

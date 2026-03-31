@@ -1,5 +1,14 @@
-const CACHE = 'petconnect-v3';
-const ASSETS = ['/', '/manifest.webmanifest', '/icon-192.png', '/icon-512.png', '/volunteer', '/shelter'];
+const CACHE = 'petconnect-v3-pages';
+const BASE_PATH = self.location.pathname.replace(/\/sw\.js$/, '');
+const withBasePath = (path) => `${BASE_PATH}${path}`.replace(/\/+/g, '/');
+const ASSETS = [
+  withBasePath('/'),
+  withBasePath('/manifest.webmanifest'),
+  withBasePath('/icon-192.png'),
+  withBasePath('/icon-512.png'),
+  withBasePath('/volunteer/'),
+  withBasePath('/shelter/'),
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));
@@ -22,6 +31,6 @@ self.addEventListener('fetch', (event) => {
         caches.open(CACHE).then((cache) => cache.put(event.request, clone));
         return response;
       })
-      .catch(() => caches.match(event.request).then((cached) => cached || caches.match('/')))
+      .catch(() => caches.match(event.request).then((cached) => cached || caches.match(withBasePath('/'))))
   );
 });

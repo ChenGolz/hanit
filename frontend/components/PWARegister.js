@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useI18n } from './I18nProvider';
+import { withBasePath } from './siteConfig';
 
 export default function PWARegister() {
   const { t } = useI18n();
@@ -9,7 +10,7 @@ export default function PWARegister() {
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
+      navigator.serviceWorker.register(withBasePath('/sw.js'), { scope: withBasePath('/') }).catch(() => {});
     }
 
     const handler = (event) => {
