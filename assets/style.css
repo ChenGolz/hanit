@@ -291,6 +291,10 @@ button, input, select, textarea { font: inherit; }
   background: rgba(15, 23, 42, 0.38);
   z-index: 1000;
 }
+
+.loading-overlay[hidden] {
+  display: none !important;
+}
 .loading-card {
   min-width: min(90vw, 320px);
   display: grid;
