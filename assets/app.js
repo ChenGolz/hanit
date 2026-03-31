@@ -331,6 +331,18 @@
   function initStoredCapture() {
     const input = document.getElementById('home-camera-input');
     const btn = document.getElementById('home-camera-button');
+
+    async function persistCapturedImage(file, coords = null) {
+      const dataUrl = await readFileAsDataURL(file);
+      sessionStorage.setItem('petconnect_captured_image', JSON.stringify({
+        dataUrl,
+        name: file.name || 'capture.jpg',
+        type: file.type || 'image/jpeg',
+        latitude: coords?.latitude ?? null,
+        longitude: coords?.longitude ?? null
+      }));
+    }
+
     if (btn && input) {
       btn.addEventListener('click', () => input.click());
       input.addEventListener('change', async () => {
@@ -339,22 +351,11 @@
         showLoading('scanningFace');
         try {
           const compressed = await compressImageFile(file);
-          let coords = null;
-          try {
-            const pos = await getCurrentPosition();
-            coords = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
-          } catch {
-            coords = null;
-          }
-          const dataUrl = await readFileAsDataURL(compressed);
-          sessionStorage.setItem('petconnect_captured_image', JSON.stringify({
-            dataUrl,
-            name: compressed.name || 'capture.jpg',
-            type: compressed.type || 'image/jpeg',
-            latitude: coords?.latitude ?? null,
-            longitude: coords?.longitude ?? null
-          }));
+          await persistCapturedImage(compressed, null);
           location.href = relativePrefix() + 'found-pet/?captured=1';
+        } catch (err) {
+          console.error('Camera capture failed:', err);
+          alert('לא הצלחנו לפתוח את הדיווח. נסו שוב.');
         } finally {
           hideLoading();
         }
@@ -369,11 +370,30 @@
       const box = document.querySelector('[data-image-preview]');
       if (box) box.innerHTML = `<img src="${data.dataUrl}" alt="preview">`;
       const form = document.getElementById('found-form');
-      if (form && data.latitude && data.longitude) fillLocationFields(form, { latitude: data.latitude, longitude: data.longitude }, false);
+      if (form && data.latitude && data.longitude) {
+        fillLocationFields(form, { latitude: data.latitude, longitude: data.longitude }, false);
+      }
       const note = document.querySelector('#found-form .notice');
       if (note) setNotice(note, 'ok', 'התמונה מהמצלמה נטענה. אפשר להשלים את הפרטים ולשלוח.');
+
+      if (form && (!data.latitude || !data.longitude)) {
+        captureLocationForForm(form, false).then((coords) => {
+          if (!coords) return;
+          try {
+            const current = JSON.parse(sessionStorage.getItem('petconnect_captured_image') || '{}');
+            current.latitude = coords.latitude;
+            current.longitude = coords.longitude;
+            sessionStorage.setItem('petconnect_captured_image', JSON.stringify(current));
+          } catch (e) {
+            console.warn('Could not update stored capture coordinates', e);
+          }
+        }).catch(() => {});
+      }
+
       scheduleLivePreview();
-    } catch {}
+    } catch (e) {
+      console.warn('Failed to restore captured image', e);
+    }
   }
 
   function initOpenCameraButtons() {
@@ -420,8 +440,34 @@
 
   function getCurrentPosition(options = {}) {
     return new Promise((resolve, reject) => {
-      if (!navigator.geolocation) { reject(new Error('Geolocation unavailable')); return; }
-      navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 6500, maximumAge: 0, ...options });
+      if (!navigator.geolocation) {
+        reject(new Error('Geolocation unavailable'));
+        return;
+      }
+
+      let settled = false;
+      const timeoutMs = Number.isFinite(options.timeout) ? options.timeout : 4500;
+      const timer = window.setTimeout(() => {
+        if (settled) return;
+        settled = true;
+        reject(new Error('Geolocation timeout'));
+      }, timeoutMs + 250);
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(timer);
+          resolve(position);
+        },
+        (error) => {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(timer);
+          reject(error);
+        },
+        { enableHighAccuracy: true, timeout: timeoutMs, maximumAge: 60000, ...options }
+      );
     });
   }
 
@@ -429,14 +475,17 @@
     if (!form || !navigator.geolocation) return null;
     const latField = form.querySelector('[name="latitude"]');
     const lngField = form.querySelector('[name="longitude"]');
-    if (!force && latField?.value && lngField?.value) return { latitude: Number(latField.value), longitude: Number(lngField.value) };
+    if (!force && latField?.value && lngField?.value) {
+      return { latitude: Number(latField.value), longitude: Number(lngField.value) };
+    }
     try {
-      const pos = await getCurrentPosition();
+      const pos = await getCurrentPosition({ timeout: 3500 });
       const coords = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
       fillLocationFields(form, coords, force);
       scheduleLivePreview();
       return coords;
-    } catch {
+    } catch (error) {
+      console.warn('Location capture skipped:', error?.message || error);
       return null;
     }
   }
