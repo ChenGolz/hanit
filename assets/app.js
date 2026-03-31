@@ -185,6 +185,24 @@
   function cityLabel(city) { const lang = currentLang(); return city?.[lang] || city?.he || city?.en || ''; }
   function relativePrefix() { const path = location.pathname; const depth = path.split('/').filter(Boolean).length; return depth <= 1 ? '' : '../'; }
 
+  async function killOldPetconnectCachesOnce() {
+    try {
+      const key = 'petconnect_hotfix_20260331';
+      if (sessionStorage.getItem(key) === '1') return;
+      sessionStorage.setItem(key, '1');
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.allSettled(regs.map(r => r.unregister()));
+      }
+      if ('caches' in window) {
+        const keys = await caches.keys();
+        await Promise.allSettled(keys.filter(k => k.includes('petconnect')).map(k => caches.delete(k)));
+      }
+    } catch (e) {
+      console.warn('PWA cleanup skipped', e);
+    }
+  }
+
   function applyTranslations() {
     const lang = currentLang();
     const dict = TRANSLATIONS[lang] || TRANSLATIONS.he;
@@ -285,7 +303,7 @@
     if (!(file instanceof File) || !String(file.type || '').startsWith('image/')) return file;
     const { maxWidth = 800, maxHeight = 800, quality = 0.82 } = options;
     let image;
-    try { image = await Promise.race([readImage(file), new Promise((_, reject) => setTimeout(() => reject(new Error('image-timeout')), 2500))]); } catch { return file; }
+    try { image = await readImage(file); } catch { return file; }
     const width = image.naturalWidth || image.width;
     const height = image.naturalHeight || image.height;
     if (!width || !height) return file;
@@ -330,33 +348,36 @@
 
   function initStoredCapture() {
     const homeBtn = document.getElementById('home-camera-button');
-    const homeInput = document.getElementById('home-camera-input');
     const bodyPage = document.body.dataset.page || '';
 
     if (bodyPage === 'home' && homeBtn) {
       homeBtn.addEventListener('click', () => {
-        showLoading('loading');
-        location.href = relativePrefix() + 'found-pet/?capture=1';
+        try { sessionStorage.setItem('petconnect_open_camera', '1'); } catch {}
+        // Let the plain <a href> navigation happen. No loading overlay here.
       });
     }
 
-    // Keep compatibility with older stored captures if they already exist.
-    const stored = sessionStorage.getItem('petconnect_captured_image');
     if (bodyPage !== 'found') return;
 
     const foundInput = document.getElementById('found-image');
     const params = new URLSearchParams(location.search);
-    if (params.get('capture') === '1' && foundInput) {
-      setTimeout(() => {
-        try { foundInput.click(); } catch {}
-        hideLoading();
-      }, 250);
+    const shouldTryOpenCamera = params.get('capture') === '1' || sessionStorage.getItem('petconnect_open_camera') === '1';
+
+    if (shouldTryOpenCamera && foundInput) {
+      try { sessionStorage.removeItem('petconnect_open_camera'); } catch {}
+      requestAnimationFrame(() => {
+        try {
+          if (typeof foundInput.showPicker === 'function') foundInput.showPicker();
+          else foundInput.click();
+        } catch {}
+      });
       try {
         const cleanUrl = location.pathname.endsWith('/') ? location.pathname : (location.pathname + '/');
         history.replaceState({}, '', cleanUrl);
       } catch {}
     }
 
+    const stored = sessionStorage.getItem('petconnect_captured_image');
     if (!stored) return;
     try {
       const data = JSON.parse(stored);
@@ -630,7 +651,7 @@
         try {
           await prepareImageInput(target);
           showImagePreview(target);
-          captureLocationForForm(form, false).catch(() => {});
+          await captureLocationForForm(form, false);
         } finally { hideLoading(); }
       }
       if (target.matches('input[name="image"], input[name="video"], input[name="city"], select[name="breed"], select[name="animal_type"], input[name="microchip_number"]')) scheduleLivePreview();
@@ -651,14 +672,10 @@
       try {
         await prepareImageInput(input);
         showImagePreview(input);
-        captureLocationForForm(form, false).catch(() => {});
+        await captureLocationForForm(form, false);
       } finally { hideLoading(); }
     });
   }
-
-
-
-  window.addEventListener('pageshow', () => { loadingCounter = 0; hideLoading(); });
 
   async function fetchRecentReports() {
     if (!apiReady()) return FALLBACK_RECENT;
@@ -746,7 +763,7 @@
     const vol = document.getElementById('volunteer-form'); if (vol) vol.addEventListener('submit', e => { e.preventDefault(); postJson(vol, '/api/volunteers', t('volunteerSaved')); });
   }
 
-  function initPwa() { if ('serviceWorker' in navigator) navigator.serviceWorker.register(relativePrefix() + 'sw.js').catch(() => {}); }
+  function initPwa() { /* temporarily disabled to prevent stale-cache issues during hotfix */ }
 
   function initInstallPrompt() {
     const button = document.getElementById('install-app-button');
@@ -785,7 +802,8 @@
     if (subtitle) subtitle.textContent = t('liveMapText');
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
+    await killOldPetconnectCachesOnce();
     initLang(); initConfigEcho(); initSearch(); initStoredCapture(); initOpenCameraButtons(); initGeolocate(); initBreedPickers(); initMaps(); initForms(); initFoundPreviewHooks(); initLostPreviewHooks(); loadMatches(); renderStories(); renderCityGrid(); renderCityPageMeta(); initPwa(); initInstallPrompt();
   });
 })();
