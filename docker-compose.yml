@@ -1,0 +1,70 @@
+version: "3.9"
+
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    container_name: israel-petconnect-db
+    environment:
+      POSTGRES_DB: petconnect
+      POSTGRES_USER: petconnect
+      POSTGRES_PASSWORD: petconnect
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U petconnect -d petconnect"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: israel-petconnect-backend
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./backend/models:/app/models
+    environment:
+      APP_NAME: Israel PetConnect AI API
+      APP_ENV: development
+      DATABASE_URL: postgresql+asyncpg://petconnect:petconnect@db:5432/petconnect
+      UPLOAD_DIR: ./uploads
+      CORS_ORIGINS: http://localhost:3000
+      PUBLIC_BASE_URL: http://localhost:8001
+      STORAGE_BACKEND: local
+      EMBEDDING_MODEL: pet_resnet50_arcface
+      EMBEDDING_DIM: "2048"
+      EMBEDDING_MARGIN_LOSS: arcface
+      NOSE_EMBEDDING_MODEL: dog_nose_arcface
+      NOSE_EMBEDDING_DIM: "2048"
+      PET_EMBEDDING_CHECKPOINT: ./models/pet_resnet50_arcface.pt
+      NOSE_EMBEDDING_CHECKPOINT: ./models/dog_nose_arcface.pt
+      SEMANTIC_MODEL_NAME: openai/clip-vit-base-patch32
+      GEOFENCE_ALERT_RADIUS_KM: "5"
+      VOLUNTEER_ALERT_RADIUS_KM: "2.5"
+      HEATMAP_RADIUS_KM: "12"
+      VIDEO_MAX_DURATION_SECONDS: "4"
+      BEST_FRAME_SAMPLES: "18"
+      PRIVACY_BLUR_ENABLED: "true"
+      MUNICIPAL_106_RECIPIENTS_JSON: '{}'
+      SMS_PROVIDER: mock
+      SOCIAL_AUTO_REPLY_ENABLED: "false"
+      ENABLE_DEV_OTP_ECHO: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    container_name: israel-petconnect-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8001
+
+volumes:
+  pgdata:
