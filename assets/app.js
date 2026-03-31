@@ -130,6 +130,11 @@
       trust2: 'אימות בעלות', trust2t: 'שאלת אימות וסימן פרטי עוזרים למנוע “pet flipping”.',
       trust3: 'שיתוף מתנדבים', trust3t: 'מתנדבי שכונה יכולים לקבל עדיפות להתראות קרובות.',
       municipalDraft: 'טיוטת 106',
+      successMatchesTitle: 'התאמות אפשריות שנמצאו עכשיו',
+      successMatchesText: 'כדאי לבדוק את ההתאמות כבר עכשיו — אולי הבעלים נמצא במרחק כמה רחובות.',
+      openLostReport: 'פתיחת דיווח',
+      manualPinHint: 'אפשר ללחוץ על המפה כדי להזיז את הסיכה למיקום המדויק האחרון.',
+      photoLink: 'קישור לתמונה',
       reportSaved: 'הדיווח נשמר.',
       volunteerSaved: 'פרטי המתנדב נשמרו.',
       installApp: 'התקן את האפליקציה לגישה מהירה',
@@ -387,6 +392,19 @@
     el.textContent = text || '';
   }
 
+  function syncMapMarker(form) {
+    if (!form) return;
+    const mapEl = form.closest('.grid')?.querySelector('[data-map]') || form.parentElement?.querySelector('[data-map]') || document.querySelector('[data-map]');
+    const map = mapEl?._map;
+    if (!map) return;
+    const lat = Number(form.querySelector('[name="latitude"]')?.value);
+    const lng = Number(form.querySelector('[name="longitude"]')?.value);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+    const latlng = [lat, lng];
+    if (mapEl._marker) mapEl._marker.setLatLng(latlng); else mapEl._marker = L.marker(latlng).addTo(map);
+    map.setView(latlng, Math.max(map.getZoom(), 14));
+  }
+
   function fillLocationFields(form, coords, force = false) {
     if (!form || !coords) return;
     const lat = String(Number(coords.latitude).toFixed(6));
@@ -397,6 +415,7 @@
     if (latField && (force || !latField.value)) latField.value = lat;
     if (lngField && (force || !lngField.value)) lngField.value = lng;
     if (locField && (force || !locField.value)) locField.value = `${lat}, ${lng}`;
+    syncMapMarker(form);
   }
 
   function getCurrentPosition(options = {}) {
@@ -488,9 +507,21 @@
       const res = await fetch(apiBase() + endpoint, { method: 'POST', body: fd });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Request failed');
-      setNotice(note, 'ok', successMsg);
+      if (form.id === 'found-form' && Array.isArray(data.matches)) {
+        const count = data.matches.length;
+        const msg = count ? `${successMsg} • ${count} ${t('possibleMatches')}` : successMsg;
+        setNotice(note, 'ok', msg);
+      } else {
+        setNotice(note, 'ok', successMsg);
+      }
       renderApiResult(form, data);
-      if (form.id === 'found-form') sessionStorage.removeItem('petconnect_captured_image');
+      if (form.id === 'found-form') {
+        sessionStorage.removeItem('petconnect_captured_image');
+        const liveStatus = document.querySelector('[data-live-match-status]');
+        const liveBox = document.querySelector('[data-live-matches]');
+        if (liveStatus && Array.isArray(data.matches)) liveStatus.textContent = data.matches.length ? `${t('possibleMatches')} · ${data.matches.length}` : t('noMatchesYet');
+        if (liveBox && Array.isArray(data.matches)) liveBox.innerHTML = data.matches.map(renderMatchCard).join('');
+      }
     } catch (err) { setNotice(note, 'err', err.message || 'Request failed'); }
     finally { hideLoading(); }
   }
@@ -513,24 +544,40 @@
 
   function renderMatchCard(match) {
     const overlap = Array.isArray(match.tag_overlap) && match.tag_overlap.length ? `<div class="small">${escapeHtml(match.tag_overlap.join(' • '))}</div>` : '';
-    return `<div class="result-card">
-      <div class="match-head"><strong>${escapeHtml(match.name || 'Pet')}</strong><span class="score-pill">${escapeHtml(match.score || '')}</span></div>
-      <div class="small">${escapeHtml(match.city || '')}</div>
-      <div class="small">${escapeHtml(match.reason || '')}</div>
-      ${overlap}
-      ${match.private_marker_prompt ? `<div class="small"><strong>${escapeHtml(t('privateMarkerPrompt'))}:</strong> ${escapeHtml(match.private_marker_prompt)}</div>` : ''}
+    const img = match.image_url ? `<img class="match-thumb" src="${escapeHtml(match.image_url)}" alt="${escapeHtml(match.name || 'Pet')}" loading="lazy">` : `<div class="match-thumb placeholder">🐾</div>`;
+    const score = (match.score === 0 || match.score) ? `${escapeHtml(String(match.score))}%` : '';
+    const reportLink = match.lost_pet_id ? `${relativePrefix()}matches/?focus=${encodeURIComponent(match.lost_pet_id)}` : '';
+    const action = reportLink ? `<a class="button ghost inline-action" href="${reportLink}">${escapeHtml(t('openLostReport'))}</a>` : '';
+    return `<div class="result-card match-card">
+      ${img}
+      <div class="match-content">
+        <div class="match-head"><strong>${escapeHtml(match.name || 'Pet')}</strong><span class="score-pill">${score}</span></div>
+        <div class="small">${escapeHtml(match.city || '')}</div>
+        <div class="small">${escapeHtml(match.reason || '')}</div>
+        ${overlap}
+        ${match.private_marker_prompt ? `<div class="small"><strong>${escapeHtml(t('privateMarkerPrompt'))}:</strong> ${escapeHtml(match.private_marker_prompt)}</div>` : ''}
+        ${action}
+      </div>
     </div>`;
   }
 
   function renderApiResult(form, data) {
-    const out = form.parentElement.querySelector('[data-result]');
+    const out = form.closest('.form-layout')?.querySelector('[data-result]') || document.querySelector('[data-result]');
     if (!out) return;
     const parts = [];
+    if (Array.isArray(data.matches)) {
+      const cards = data.matches.length ? data.matches.map(renderMatchCard).join('') : `<div class="result-card">${escapeHtml(t('noMatchesYet'))}</div>`;
+      parts.push(`<div class="result-card success-gallery"><strong>${escapeHtml(t('successMatchesTitle'))}</strong><div class="small">${escapeHtml(t('successMatchesText'))}</div><div class="list">${cards}</div></div>`);
+    }
     if (data.best_frame) parts.push(`<div class="result-card"><strong>${escapeHtml(t('bestFrame'))}</strong><div class="small">${escapeHtml(JSON.stringify(data.best_frame))}</div></div>`);
-    if (data.municipal_draft) parts.push(`<div class="result-card"><strong>${escapeHtml(t('municipalDraft'))}</strong><div class="small">${escapeHtml(data.municipal_draft.subject || '')}</div><div class="small">${escapeHtml(data.municipal_draft.body || '')}</div></div>`);
-    if (Array.isArray(data.matches) && data.matches.length) parts.push(`<div class="list">${data.matches.map(renderMatchCard).join('')}</div>`);
-    else if (Array.isArray(data.matches)) parts.push(`<div class="result-card">${escapeHtml(t('noMatchesYet'))}</div>`);
+    if (data.municipal_draft) {
+      const photoLine = data.municipal_draft.body && /Photo:\s*(\S+)/.exec(data.municipal_draft.body);
+      const photoUrl = photoLine?.[1] || '';
+      const photoAction = photoUrl ? `<div class="actions"><a class="button ghost inline-action" href="${escapeHtml(photoUrl)}" target="_blank" rel="noopener">${escapeHtml(t('photoLink'))}</a></div>` : '';
+      parts.push(`<div class="result-card"><strong>${escapeHtml(t('municipalDraft'))}</strong><div class="small">${escapeHtml(data.municipal_draft.subject || '')}</div><div class="small result-prewrap">${escapeHtml(data.municipal_draft.body || '')}</div>${photoAction}</div>`);
+    }
     out.innerHTML = parts.join('');
+    out.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   async function previewFoundMatches() {
@@ -556,7 +603,7 @@
         res = await fetch(apiBase() + '/api/lost-pets?' + params.toString());
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || 'Failed');
-        const items = Array.isArray(data) ? data.slice(0, 4).map(item => ({ name: item.name, city: item.city, score: '—', reason: t('recentReports'), tag_overlap: item.semantic_tags || [], private_marker_prompt: item.private_marker_prompt || '' })) : [];
+        const items = Array.isArray(data) ? data.slice(0, 4).map(item => ({ name: item.name, city: item.city, score: '—', reason: t('recentReports'), tag_overlap: item.semantic_tags || [], private_marker_prompt: item.private_marker_prompt || '', image_url: item.image_url || '', lost_pet_id: item.id || '' })) : [];
         status.textContent = items.length ? t('possibleMatches') : t('noMatchesYet');
         box.innerHTML = items.map(renderMatchCard).join('');
         return;
@@ -630,19 +677,23 @@
       if (el._leaflet_id) return;
       const map = L.map(el).setView([31.5, 34.9], 8);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+      const form = el.closest('.grid')?.querySelector('form') || document.querySelector('form');
       map.on('click', evt => {
-        const form = el.closest('.grid')?.querySelector('form') || document.querySelector('form');
         if (!form) return;
         const lat = form.querySelector('[name="latitude"]');
         const lng = form.querySelector('[name="longitude"]');
         const loc = form.querySelector('[name="seen_location"], [name="last_seen_location"]');
         if (lat) lat.value = evt.latlng.lat.toFixed(6);
         if (lng) lng.value = evt.latlng.lng.toFixed(6);
-        if (loc && !loc.value) loc.value = `${evt.latlng.lat.toFixed(6)}, ${evt.latlng.lng.toFixed(6)}`;
+        if (loc) loc.value = `${evt.latlng.lat.toFixed(6)}, ${evt.latlng.lng.toFixed(6)}`;
         if (el._marker) el._marker.setLatLng(evt.latlng); else el._marker = L.marker(evt.latlng).addTo(map);
         scheduleLivePreview();
       });
       el._map = map;
+      if (form) {
+        ['latitude', 'longitude'].forEach(name => form.querySelector(`[name="${name}"]`)?.addEventListener('input', () => syncMapMarker(form)));
+        syncMapMarker(form);
+      }
     });
 
     const homeMapEl = document.getElementById('home-map');
@@ -675,9 +726,11 @@
       if (!res.ok) throw new Error(data.detail || 'Failed');
       let items = Array.isArray(data) ? data : [];
       if (q) items = items.filter(item => JSON.stringify(item).toLowerCase().includes(q.toLowerCase()));
+      const focusId = params.get('focus');
+      if (focusId) items = items.sort((a, b) => String(a.id) === focusId ? -1 : String(b.id) === focusId ? 1 : 0);
       if (!items.length) { list.innerHTML = `<div class="empty">${escapeHtml(t('none'))}</div>`; return; }
       list.innerHTML = items.map(item => `
-        <div class="result-card">
+        <div class="result-card ${String(item.id) === focusId ? 'focus-card' : ''}">
           <div class="match-head"><strong>${escapeHtml(item.name || 'Pet')}</strong><span class="status-pill">${escapeHtml(item.status || 'active')}</span></div>
           <div class="small">${escapeHtml(item.animal_type || '')} · ${escapeHtml(item.breed || '')} · ${escapeHtml(item.city || '')}</div>
           <div class="small">${escapeHtml(item.color || '')} · ${escapeHtml(item.unique_markings || '')}</div>
