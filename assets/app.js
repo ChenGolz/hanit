@@ -177,6 +177,53 @@
     return (window.PETCONNECT_CONFIG && window.PETCONNECT_CONFIG.API_BASE_URL || '').replace(/\/$/, '');
   }
   function apiReady() { return !!apiBase(); }
+  const LOCAL_REPORTS_KEY = 'petconnect_local_reports_v1';
+  function readLocalReports() {
+    try {
+      const data = JSON.parse(localStorage.getItem(LOCAL_REPORTS_KEY) || '[]');
+      return Array.isArray(data) ? data : [];
+    } catch {
+      return [];
+    }
+  }
+  function writeLocalReports(items) {
+    localStorage.setItem(LOCAL_REPORTS_KEY, JSON.stringify(items));
+  }
+  async function saveReportLocally(form, type) {
+    const fd = new FormData(form);
+    const imageInput = form.querySelector('input[name="image"]');
+    const imageFile = getPreparedFile(imageInput) || (type === 'found' ? pendingCapturedImage : null) || imageInput?.files?.[0] || null;
+    let image_url = '';
+    if (imageFile) {
+      try { image_url = await readFileAsDataURL(imageFile); } catch {}
+    }
+    const item = {
+      id: `local-${Date.now()}-${Math.random().toString(36).slice(2,8)}`,
+      status: 'saved-on-this-device',
+      source: 'local-demo',
+      report_type: type,
+      created_at: new Date().toISOString(),
+      name: String(fd.get('name') || fd.get('finder_name') || (type === 'lost' ? 'Missing pet' : 'Found pet')),
+      animal_type: String(fd.get('animal_type') || 'dog'),
+      breed: String(fd.get('breed') || ''),
+      color: String(fd.get('color') || ''),
+      city: String(fd.get('city') || ''),
+      neighborhood: String(fd.get('neighborhood') || ''),
+      latitude: fd.get('latitude') ? Number(fd.get('latitude')) : null,
+      longitude: fd.get('longitude') ? Number(fd.get('longitude')) : null,
+      last_seen_location: String(fd.get('last_seen_location') || fd.get('seen_location') || ''),
+      notes: String(fd.get('notes') || ''),
+      contact_name: String(fd.get('contact_name') || ''),
+      contact_phone: String(fd.get('contact_phone') || ''),
+      contact_email: String(fd.get('contact_email') || ''),
+      image_url,
+      local_only: true
+    };
+    const items = readLocalReports();
+    items.unshift(item);
+    writeLocalReports(items.slice(0, 100));
+    return item;
+  }
   function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c])); }
   function currentLang() { return localStorage.getItem('petconnect_lang') || 'he'; }
   function setLang(lang) { localStorage.setItem('petconnect_lang', TRANSLATIONS[lang] ? lang : 'he'); applyTranslations(); }
@@ -184,24 +231,6 @@
   function t(key) { const lang = currentLang(); const actual = TRANSLATIONS[lang]?.[key] ? key : (KEY_ALIASES[key] || key); return TRANSLATIONS[lang]?.[actual] || TRANSLATIONS.he[actual] || key; }
   function cityLabel(city) { const lang = currentLang(); return city?.[lang] || city?.he || city?.en || ''; }
   function relativePrefix() { const path = location.pathname; const depth = path.split('/').filter(Boolean).length; return depth <= 1 ? '' : '../'; }
-
-  async function killOldPetconnectCachesOnce() {
-    try {
-      const key = 'petconnect_hotfix_20260331';
-      if (sessionStorage.getItem(key) === '1') return;
-      sessionStorage.setItem(key, '1');
-      if ('serviceWorker' in navigator) {
-        const regs = await navigator.serviceWorker.getRegistrations();
-        await Promise.allSettled(regs.map(r => r.unregister()));
-      }
-      if ('caches' in window) {
-        const keys = await caches.keys();
-        await Promise.allSettled(keys.filter(k => k.includes('petconnect')).map(k => caches.delete(k)));
-      }
-    } catch (e) {
-      console.warn('PWA cleanup skipped', e);
-    }
-  }
 
   function applyTranslations() {
     const lang = currentLang();
@@ -347,38 +376,40 @@
   }
 
   function initStoredCapture() {
-    const homeBtn = document.getElementById('home-camera-button');
-    const bodyPage = document.body.dataset.page || '';
-
-    if (bodyPage === 'home' && homeBtn) {
-      homeBtn.addEventListener('click', () => {
-        try { sessionStorage.setItem('petconnect_open_camera', '1'); } catch {}
-        // Let the plain <a href> navigation happen. No loading overlay here.
-      });
-    }
-
-    if (bodyPage !== 'found') return;
-
-    const foundInput = document.getElementById('found-image');
-    const params = new URLSearchParams(location.search);
-    const shouldTryOpenCamera = params.get('capture') === '1' || sessionStorage.getItem('petconnect_open_camera') === '1';
-
-    if (shouldTryOpenCamera && foundInput) {
-      try { sessionStorage.removeItem('petconnect_open_camera'); } catch {}
-      requestAnimationFrame(() => {
+    const input = document.getElementById('home-camera-input');
+    const btn = document.getElementById('home-camera-button');
+    if (btn && input) {
+      btn.addEventListener('click', () => input.click());
+      input.addEventListener('change', async () => {
+        const file = input.files?.[0];
+        if (!file) return;
+        showLoading('scanningFace');
         try {
-          if (typeof foundInput.showPicker === 'function') foundInput.showPicker();
-          else foundInput.click();
-        } catch {}
+          const compressed = await compressImageFile(file);
+          let coords = null;
+          try {
+            const pos = await getCurrentPosition();
+            coords = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
+          } catch {
+            coords = null;
+          }
+          const dataUrl = await readFileAsDataURL(compressed);
+          sessionStorage.setItem('petconnect_captured_image', JSON.stringify({
+            dataUrl,
+            name: compressed.name || 'capture.jpg',
+            type: compressed.type || 'image/jpeg',
+            latitude: coords?.latitude ?? null,
+            longitude: coords?.longitude ?? null
+          }));
+          location.href = relativePrefix() + 'found-pet/?captured=1';
+        } finally {
+          hideLoading();
+        }
       });
-      try {
-        const cleanUrl = location.pathname.endsWith('/') ? location.pathname : (location.pathname + '/');
-        history.replaceState({}, '', cleanUrl);
-      } catch {}
     }
 
     const stored = sessionStorage.getItem('petconnect_captured_image');
-    if (!stored) return;
+    if (!stored || !document.body.dataset.page || document.body.dataset.page !== 'found') return;
     try {
       const data = JSON.parse(stored);
       pendingCapturedImage = new File([dataURLtoBlob(data.dataUrl)], data.name || 'capture.jpg', { type: data.type || 'image/jpeg' });
@@ -505,7 +536,22 @@
 
   async function postMultipart(form, endpoint, successMsg) {
     const note = form.querySelector('.notice');
-    if (!apiReady()) { setNotice(note, 'warn', t('apiWarning')); return; }
+    if (!apiReady()) {
+      const localType = form.id === 'lost-form' ? 'lost' : form.id === 'found-form' ? 'found' : '';
+      if (!localType) { setNotice(note, 'warn', t('apiWarning')); return; }
+      showLoading('loading');
+      try {
+        if (!new FormData(form).get('latitude') || !new FormData(form).get('longitude')) await captureLocationForForm(form, false);
+        const saved = await saveReportLocally(form, localType);
+        setNotice(note, 'ok', `${successMsg} • נשמר מקומית במכשיר הזה בלבד`);
+        renderApiResult(form, saved.matches ? saved : { local_saved: true, item: saved });
+      } catch (err) {
+        setNotice(note, 'err', err.message || 'Local save failed');
+      } finally {
+        hideLoading();
+      }
+      return;
+    }
     showLoading('scanningFace');
     const fd = new FormData(form);
     if (form.id === 'found-form' && pendingCapturedImage && !fd.get('image')?.name) fd.set('image', pendingCapturedImage, pendingCapturedImage.name);
@@ -544,7 +590,15 @@
 
   async function postJson(form, endpoint, successMsg) {
     const note = form.querySelector('.notice');
-    if (!apiReady()) { setNotice(note, 'warn', t('apiWarning')); return; }
+    if (!apiReady()) {
+      const body = Object.fromEntries(new FormData(form).entries());
+      const items = readLocalReports();
+      items.unshift({ id: `local-${Date.now()}`, report_type: 'volunteer', created_at: new Date().toISOString(), local_only: true, ...body });
+      writeLocalReports(items.slice(0, 100));
+      setNotice(note, 'ok', `${successMsg} • נשמר מקומית במכשיר הזה בלבד`);
+      renderApiResult(form, { local_saved: true, item: body });
+      return;
+    }
     showLoading('loading');
     const body = Object.fromEntries(new FormData(form).entries());
     ['latitude', 'longitude', 'radius_km'].forEach(k => { if (body[k] === '') delete body[k]; else if (body[k] != null) body[k] = Number(body[k]); });
@@ -581,6 +635,9 @@
     const out = form.closest('.form-layout')?.querySelector('[data-result]') || document.querySelector('[data-result]');
     if (!out) return;
     const parts = [];
+    if (data.local_saved && data.item) {
+      parts.push(`<div class="result-card"><strong>${escapeHtml(t('reportSaved'))}</strong><div class="small">נשמר מקומית בדפדפן הזה בלבד, כי עדיין לא הוגדר backend ב‑config.js.</div><div class="small">${escapeHtml(data.item.name || '')} ${data.item.city ? '· ' + escapeHtml(data.item.city) : ''}</div></div>`);
+    }
     if (Array.isArray(data.matches)) {
       const cards = data.matches.length ? data.matches.map(renderMatchCard).join('') : `<div class="result-card">${escapeHtml(t('noMatchesYet'))}</div>`;
       parts.push(`<div class="result-card success-gallery"><strong>${escapeHtml(t('successMatchesTitle'))}</strong><div class="small">${escapeHtml(t('successMatchesText'))}</div><div class="list">${cards}</div></div>`);
@@ -678,7 +735,10 @@
   }
 
   async function fetchRecentReports() {
-    if (!apiReady()) return FALLBACK_RECENT;
+    if (!apiReady()) {
+      const localLost = readLocalReports().filter(item => item.report_type === 'lost');
+      return [...localLost, ...FALLBACK_RECENT];
+    }
     try {
       const res = await fetch(apiBase() + '/api/lost-pets');
       const data = await res.json();
@@ -731,7 +791,20 @@
   async function loadMatches() {
     const list = document.getElementById('matches-list');
     if (!list) return;
-    if (!apiReady()) { list.innerHTML = `<div class="empty">${escapeHtml(t('apiWarning'))}</div>`; return; }
+    if (!apiReady()) {
+      const params = new URLSearchParams(location.search);
+      const q = params.get('q') || '';
+      let items = readLocalReports().filter(item => item.report_type === 'lost');
+      if (q) items = items.filter(item => JSON.stringify(item).toLowerCase().includes(q.toLowerCase()));
+      if (!items.length) { list.innerHTML = `<div class="empty">${escapeHtml(t('apiWarning'))}</div>`; return; }
+      list.innerHTML = items.map(item => `
+        <div class="result-card">
+          <div class="match-head"><strong>${escapeHtml(item.name || 'Pet')}</strong><span class="status-pill">local demo</span></div>
+          <div class="small">${escapeHtml(item.animal_type || '')} · ${escapeHtml(item.breed || '')} · ${escapeHtml(item.city || '')}</div>
+          <div class="small">${escapeHtml(item.color || '')} · ${escapeHtml(item.last_seen_location || '')}</div>
+        </div>`).join('');
+      return;
+    }
     list.innerHTML = `<div class="empty">${escapeHtml(t('loading'))}</div>`;
     const params = new URLSearchParams(location.search);
     const city = document.body.dataset.citySlug || params.get('city') || '';
@@ -763,7 +836,7 @@
     const vol = document.getElementById('volunteer-form'); if (vol) vol.addEventListener('submit', e => { e.preventDefault(); postJson(vol, '/api/volunteers', t('volunteerSaved')); });
   }
 
-  function initPwa() { /* temporarily disabled to prevent stale-cache issues during hotfix */ }
+  function initPwa() { if ('serviceWorker' in navigator) navigator.serviceWorker.register(relativePrefix() + 'sw.js').catch(() => {}); }
 
   function initInstallPrompt() {
     const button = document.getElementById('install-app-button');
@@ -802,8 +875,7 @@
     if (subtitle) subtitle.textContent = t('liveMapText');
   }
 
-  document.addEventListener('DOMContentLoaded', async () => {
-    await killOldPetconnectCachesOnce();
+  document.addEventListener('DOMContentLoaded', () => {
     initLang(); initConfigEcho(); initSearch(); initStoredCapture(); initOpenCameraButtons(); initGeolocate(); initBreedPickers(); initMaps(); initForms(); initFoundPreviewHooks(); initLostPreviewHooks(); loadMatches(); renderStories(); renderCityGrid(); renderCityPageMeta(); initPwa(); initInstallPrompt();
   });
 })();
