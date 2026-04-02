@@ -135,6 +135,11 @@
       openLostReport: 'פתיחת דיווח',
       manualPinHint: 'אפשר ללחוץ על המפה כדי להזיז את הסיכה למיקום המדויק האחרון.',
       photoLink: 'קישור לתמונה',
+      folderSearchMode: 'חיפוש מהתיקייה',
+      staticSearchReady: 'בודק התאמות מול התמונות שהוספת לתיקייה...',
+      staticLibraryEmpty: 'עדיין לא נוספו תמונות לחיפוש. הוסיפי קבצים לתיקייה library/pets ועדכני data/pets.json.',
+      staticSearchOnly: 'בוצע חיפוש מול התמונות שבתיקייה. הקובץ שהמעלה צירף לא נשמר בשרת.',
+      staticSearchSaved: 'החיפוש הושלם מול התמונות שבתיקייה.',
       reportSaved: 'הדיווח נשמר.',
       volunteerSaved: 'פרטי המתנדב נשמרו.',
       installApp: 'התקן את האפליקציה לגישה מהירה',
@@ -159,11 +164,11 @@
       lostBig: 'I lost a pet', lostSmall: 'Blue = owner report', foundBig: 'I saw a stray animal', foundSmall: 'Green = finder report',
       featureCamera: 'Built-in camera flow', featureCameraText: 'One tap opens direct capture with thumb-friendly touch targets.', featureGeo: 'Automatic location', featureGeoText: 'Use Geolocation to fill coordinates and location while reporting.', featureInstant: 'Instant similar results', featureInstantText: 'The Found flow shows possible matches before final submit.',
       liveMapTitle: 'Live map of reports from the last hour', liveMapText: 'Quick visibility into the freshest sightings.', openMap: 'Open full map', storiesTitle: 'Recently reunited', storiesText: 'Successful reunions build trust and hope.', cityTitle: 'City pages', cityText: 'Fast landing pages for major cities in Israel.', footer: 'Static GitHub Pages build • AI, DB, SMS, and alerts still require an external backend', apiBase: 'API base URL', apiWarning: 'To make forms and matching work, edit config.js with your backend URL.',
-      foundTitleNew: 'I saw a stray animal', foundSubtitle: 'Fast mobile report with possible matches shown while uploading.', lostTitleNew: 'I lost a pet', lostSubtitle: 'Smart form with location, private markers, and ownership verification.', step1of3: 'Step 1 of 3', stepFoundLabel: 'Photo and details', stepLostLabel: 'Identity and owner details', photoTipTitle: 'Photo tip', photoTip: 'Try shooting from the animal’s height in daylight. A sharp face photo improves matching.', image: 'Photo', video: 'Short video', nosePhoto: 'Nose-up photo', privateMarkerPhoto: 'Private marker photo', animalType: 'Animal type', breed: 'Breed', color: 'Color', collar: 'Collar description', name: 'Pet name', markings: 'Unique markings', city: 'City', neighborhood: 'Neighborhood', location: 'Location', notes: 'Notes', finderName: 'Finder name', contactName: 'Contact name', phone: 'Phone', email: 'Email', microchip: 'Microchip number', verificationPrompt: 'Private verification question', verificationAnswer: 'Verification answer', privateMarkerPrompt: 'Private physical marker', verificationQuizHint: 'Example: “Does the dog have a white spot on the back paw?”', saveFound: 'Submit found report', saveLost: 'Submit lost report', saveVolunteer: 'Save volunteer', runShelter: 'Run scan', useLocation: 'Use my location', bestFrame: 'If you upload video, the backend can choose the best frame automatically.', possibleMatches: 'Possible matches', instantPreviewTitle: 'Checking similar reports already', instantPreviewText: 'After choosing a photo, similar reports can show up before final submit.', instantMatchHint: 'This panel updates from image, city, and breed.', instantWaiting: 'Choose a photo to start a quick match preview.', previewEmpty: 'Your photo preview will appear here', previewLoading: 'Checking matches...', previewUnavailable: 'Live previews require a backend preview endpoint.', noMatchesYet: 'No strong matches yet.', recentReports: 'Relevant reports', communityTrustTitle: 'Trust and community', trust1: 'Masked contact channels', trust1t: 'Owner and finder contact can stay protected.', trust2: 'Ownership verification', trust2t: 'A private question and marker reduce pet flipping.', trust3: 'Volunteer network', trust3t: 'Neighborhood responders can get priority alerts nearby.', municipalDraft: '106 draft', reportSaved: 'Report saved.', volunteerSaved: 'Volunteer saved.', installApp: 'Install app for quick access', scanningFace: 'Scanning face...', shelterSaved: 'Shelter scan saved.', loading: 'Loading...', none: 'No data yet.', sourcePlatform: 'Source platform', radiusKm: 'Radius km', shelterName: 'Shelter / authority name', matchesTitle: 'Active reports', volunteerTitle: 'Neighborhood volunteer', shelterTitle: 'Shelter intake scan'
+      foundTitleNew: 'I saw a stray animal', foundSubtitle: 'Fast mobile report with possible matches shown while uploading.', lostTitleNew: 'I lost a pet', lostSubtitle: 'Smart form with location, private markers, and ownership verification.', step1of3: 'Step 1 of 3', stepFoundLabel: 'Photo and details', stepLostLabel: 'Identity and owner details', photoTipTitle: 'Photo tip', photoTip: 'Try shooting from the animal’s height in daylight. A sharp face photo improves matching.', image: 'Photo', video: 'Short video', nosePhoto: 'Nose-up photo', privateMarkerPhoto: 'Private marker photo', animalType: 'Animal type', breed: 'Breed', color: 'Color', collar: 'Collar description', name: 'Pet name', markings: 'Unique markings', city: 'City', neighborhood: 'Neighborhood', location: 'Location', notes: 'Notes', finderName: 'Finder name', contactName: 'Contact name', phone: 'Phone', email: 'Email', microchip: 'Microchip number', verificationPrompt: 'Private verification question', verificationAnswer: 'Verification answer', privateMarkerPrompt: 'Private physical marker', verificationQuizHint: 'Example: “Does the dog have a white spot on the back paw?”', saveFound: 'Submit found report', saveLost: 'Submit lost report', saveVolunteer: 'Save volunteer', runShelter: 'Run scan', useLocation: 'Use my location', bestFrame: 'If you upload video, the backend can choose the best frame automatically.', possibleMatches: 'Possible matches', instantPreviewTitle: 'Checking similar reports already', instantPreviewText: 'After choosing a photo, similar reports can show up before final submit.', instantMatchHint: 'This panel updates from image, city, and breed.', instantWaiting: 'Choose a photo to start a quick match preview.', previewEmpty: 'Your photo preview will appear here', previewLoading: 'Checking matches...', previewUnavailable: 'Live previews require a backend preview endpoint.', noMatchesYet: 'No strong matches yet.', recentReports: 'Relevant reports', communityTrustTitle: 'Trust and community', trust1: 'Masked contact channels', trust1t: 'Owner and finder contact can stay protected.', trust2: 'Ownership verification', trust2t: 'A private question and marker reduce pet flipping.', trust3: 'Volunteer network', trust3t: 'Neighborhood responders can get priority alerts nearby.', municipalDraft: '106 draft', reportSaved: 'Report saved.', volunteerSaved: 'Volunteer saved.', installApp: 'Install app for quick access', scanningFace: 'Scanning face...', shelterSaved: 'Shelter scan saved.', loading: 'Loading...', none: 'No data yet.', sourcePlatform: 'Source platform', radiusKm: 'Radius km', shelterName: 'Shelter / authority name', matchesTitle: 'Active reports', volunteerTitle: 'Neighborhood volunteer', shelterTitle: 'Shelter intake scan', folderSearchMode: 'Folder search mode', staticSearchReady: 'Checking against the images you added to the folder...', staticLibraryEmpty: 'No library images were added yet. Put files in library/pets and update data/pets.json.', staticSearchOnly: 'This searched the images you added to the folder. The visitor upload was not saved to a server.', staticSearchSaved: 'Folder search finished successfully.'
     },
     ar: {
       brand: 'PetConnect Israel', language: 'اللغة', liveMapNav: 'الخريطة الحية', volunteerLogin: 'دخول المتطوع',
-      heroBadge: '🐾 الوقت حاسم — بلّغ من هاتفك خلال ثوانٍ', heroTitle: 'إذا رأيت حيوانًا شاردًا الآن، ابدأ بالكاميرا لا بنموذج طويل.', heroText: 'هذه النسخة مبنية أولًا للهاتف: أزرار طوارئ واضحة، فتح مباشر للكاميرا، تحديد موقع تلقائي، ومعاينة تطابقات أثناء تعبئة البلاغ.', searchLabel: 'ابحث حسب المدينة أو نوع الحيوان', searchPlaceholder: 'مثال: تل أبيب، هاسكي، قط أبيض', searchButton: 'بحث', emergencyEyebrow: 'بلاغ طارئ', emergencyTitle: 'وجدت كلبًا الآن!', emergencyText: 'هذا الزر يفتح كاميرا الهاتف مباشرة وينقلك إلى البلاغ السريع.', emergencyButton: '📸 افتح الكاميرا الآن', lostBig: 'فقدت حيوانًا', lostSmall: 'الأزرق = بلاغ مالك', foundBig: 'رأيت حيوانًا شاردًا', foundSmall: 'الأخضر = بلاغ مُبلّغ', featureCamera: 'كاميرا مدمجة', featureCameraText: 'ضغطة واحدة تفتح الالتقاط المباشر مع أزرار كبيرة ومريحة.', featureGeo: 'موقع تلقائي', featureGeoText: 'استخدم تحديد الموقع لملء الإحداثيات والمكان أثناء البلاغ.', featureInstant: 'نتائج فورية مشابهة', featureInstantText: 'صفحة العثور تعرض تطابقات محتملة قبل الإرسال النهائي.', liveMapTitle: 'خريطة حية لبلاغات الساعة الأخيرة', liveMapText: 'رؤية سريعة لأحدث المشاهدات.', openMap: 'افتح الخريطة الكاملة', storiesTitle: 'عادوا مؤخرًا إلى البيت', storiesText: 'القصص الناجحة تبني الثقة والأمل.', cityTitle: 'صفحات المدن', cityText: 'صفحات سريعة للمدن الرئيسية في إسرائيل.', footer: 'نسخة ثابتة لـ GitHub Pages • الذكاء الاصطناعي وقاعدة البيانات والتنبيهات تحتاج Backend خارجي', apiBase: 'رابط الخادم', apiWarning: 'لكي تعمل النماذج والتطابقات، عدّل config.js وضع رابط الخادم.', foundTitleNew: 'رأيت حيوانًا شاردًا', foundSubtitle: 'بلاغ سريع للهاتف مع تطابقات محتملة أثناء رفع الصورة.', lostTitleNew: 'فقدت حيوانًا', lostSubtitle: 'نموذج ذكي مع الموقع وعلامات خاصة وأسئلة تحقق.', step1of3: 'الخطوة 1 من 3', stepFoundLabel: 'الصورة والتفاصيل', stepLostLabel: 'هوية الحيوان وبيانات المالك', photoTipTitle: 'نصيحة تصوير', photoTip: 'حاول التصوير من مستوى الحيوان وفي ضوء النهار. صورة واضحة للوجه تحسن التطابق.', image: 'صورة', video: 'فيديو قصير', nosePhoto: 'صورة مقربة للأنف', privateMarkerPhoto: 'صورة خاصة لعلامة مميزة', animalType: 'نوع الحيوان', breed: 'السلالة', color: 'اللون', collar: 'وصف الطوق', name: 'اسم الحيوان', markings: 'علامات مميزة', city: 'المدينة', neighborhood: 'الحي', location: 'الموقع', notes: 'ملاحظات', finderName: 'اسم المُبلّغ', contactName: 'اسم جهة الاتصال', phone: 'الهاتف', email: 'البريد الإلكتروني', microchip: 'رقم الشريحة', verificationPrompt: 'سؤال تحقق خاص', verificationAnswer: 'إجابة التحقق', privateMarkerPrompt: 'علامة جسدية خاصة', verificationQuizHint: 'مثال: هل توجد بقعة بيضاء في القدم الخلفية؟', saveFound: 'إرسال بلاغ العثور', saveLost: 'إرسال بلاغ الفقدان', saveVolunteer: 'حفظ المتطوع', runShelter: 'بدء المسح', useLocation: 'استخدم موقعي', bestFrame: 'عند رفع فيديو يمكن للخادم اختيار أفضل لقطة تلقائيًا.', possibleMatches: 'تطابقات محتملة', instantPreviewTitle: 'نفحص التقارير المشابهة الآن', instantPreviewText: 'بعد اختيار الصورة يمكن أن تظهر نتائج مشابهة قبل الإرسال النهائي.', instantMatchHint: 'هذه اللوحة تتحدث وفق الصورة والمدينة والسلالة.', instantWaiting: 'اختر صورة لبدء معاينة سريعة.', previewEmpty: 'ستظهر معاينة الصورة هنا', previewLoading: 'جارٍ فحص التطابقات...', previewUnavailable: 'المعاينة الحية تحتاج endpoint للمعاينة في الخادم.', noMatchesYet: 'لا توجد تطابقات قوية حاليًا.', recentReports: 'تقارير ذات صلة', communityTrustTitle: 'الثقة والمجتمع', trust1: 'قنوات اتصال محمية', trust1t: 'يمكن حماية التواصل بين المالك والواجد.', trust2: 'تحقق من الملكية', trust2t: 'سؤال خاص وعلامة مميزة يقللان الاحتيال.', trust3: 'شبكة متطوعين', trust3t: 'متطوعو الأحياء يمكنهم تلقي تنبيهات قريبة.', municipalDraft: 'مسودة 106', reportSaved: 'تم حفظ البلاغ.', volunteerSaved: 'تم حفظ بيانات المتطوع.', installApp: 'ثبّت التطبيق للوصول السريع', scanningFace: 'جارٍ فحص الوجه...', shelterSaved: 'تم حفظ مسح الملجأ.', loading: 'جارٍ التحميل...', none: 'لا توجد بيانات بعد.', sourcePlatform: 'المنصة', radiusKm: 'نطاق كم', shelterName: 'اسم الملجأ / السلطة', matchesTitle: 'بلاغات نشطة', volunteerTitle: 'متطوع الحي', shelterTitle: 'مسح استقبال الملجأ'
+      heroBadge: '🐾 الوقت حاسم — بلّغ من هاتفك خلال ثوانٍ', heroTitle: 'إذا رأيت حيوانًا شاردًا الآن، ابدأ بالكاميرا لا بنموذج طويل.', heroText: 'هذه النسخة مبنية أولًا للهاتف: أزرار طوارئ واضحة، فتح مباشر للكاميرا، تحديد موقع تلقائي، ومعاينة تطابقات أثناء تعبئة البلاغ.', searchLabel: 'ابحث حسب المدينة أو نوع الحيوان', searchPlaceholder: 'مثال: تل أبيب، هاسكي، قط أبيض', searchButton: 'بحث', emergencyEyebrow: 'بلاغ طارئ', emergencyTitle: 'وجدت كلبًا الآن!', emergencyText: 'هذا الزر يفتح كاميرا الهاتف مباشرة وينقلك إلى البلاغ السريع.', emergencyButton: '📸 افتح الكاميرا الآن', lostBig: 'فقدت حيوانًا', lostSmall: 'الأزرق = بلاغ مالك', foundBig: 'رأيت حيوانًا شاردًا', foundSmall: 'الأخضر = بلاغ مُبلّغ', featureCamera: 'كاميرا مدمجة', featureCameraText: 'ضغطة واحدة تفتح الالتقاط المباشر مع أزرار كبيرة ومريحة.', featureGeo: 'موقع تلقائي', featureGeoText: 'استخدم تحديد الموقع لملء الإحداثيات والمكان أثناء البلاغ.', featureInstant: 'نتائج فورية مشابهة', featureInstantText: 'صفحة العثور تعرض تطابقات محتملة قبل الإرسال النهائي.', liveMapTitle: 'خريطة حية لبلاغات الساعة الأخيرة', liveMapText: 'رؤية سريعة لأحدث المشاهدات.', openMap: 'افتح الخريطة الكاملة', storiesTitle: 'عادوا مؤخرًا إلى البيت', storiesText: 'القصص الناجحة تبني الثقة والأمل.', cityTitle: 'صفحات المدن', cityText: 'صفحات سريعة للمدن الرئيسية في إسرائيل.', footer: 'نسخة ثابتة لـ GitHub Pages • الذكاء الاصطناعي وقاعدة البيانات والتنبيهات تحتاج Backend خارجي', apiBase: 'رابط الخادم', apiWarning: 'لكي تعمل النماذج والتطابقات، عدّل config.js وضع رابط الخادم.', foundTitleNew: 'رأيت حيوانًا شاردًا', foundSubtitle: 'بلاغ سريع للهاتف مع تطابقات محتملة أثناء رفع الصورة.', lostTitleNew: 'فقدت حيوانًا', lostSubtitle: 'نموذج ذكي مع الموقع وعلامات خاصة وأسئلة تحقق.', step1of3: 'الخطوة 1 من 3', stepFoundLabel: 'الصورة والتفاصيل', stepLostLabel: 'هوية الحيوان وبيانات المالك', photoTipTitle: 'نصيحة تصوير', photoTip: 'حاول التصوير من مستوى الحيوان وفي ضوء النهار. صورة واضحة للوجه تحسن التطابق.', image: 'صورة', video: 'فيديو قصير', nosePhoto: 'صورة مقربة للأنف', privateMarkerPhoto: 'صورة خاصة لعلامة مميزة', animalType: 'نوع الحيوان', breed: 'السلالة', color: 'اللون', collar: 'وصف الطوق', name: 'اسم الحيوان', markings: 'علامات مميزة', city: 'المدينة', neighborhood: 'الحي', location: 'الموقع', notes: 'ملاحظات', finderName: 'اسم المُبلّغ', contactName: 'اسم جهة الاتصال', phone: 'الهاتف', email: 'البريد الإلكتروني', microchip: 'رقم الشريحة', verificationPrompt: 'سؤال تحقق خاص', verificationAnswer: 'إجابة التحقق', privateMarkerPrompt: 'علامة جسدية خاصة', verificationQuizHint: 'مثال: هل توجد بقعة بيضاء في القدم الخلفية؟', saveFound: 'إرسال بلاغ العثور', saveLost: 'إرسال بلاغ الفقدان', saveVolunteer: 'حفظ المتطوع', runShelter: 'بدء المسح', useLocation: 'استخدم موقعي', bestFrame: 'عند رفع فيديو يمكن للخادم اختيار أفضل لقطة تلقائيًا.', possibleMatches: 'تطابقات محتملة', instantPreviewTitle: 'نفحص التقارير المشابهة الآن', instantPreviewText: 'بعد اختيار الصورة يمكن أن تظهر نتائج مشابهة قبل الإرسال النهائي.', instantMatchHint: 'هذه اللوحة تتحدث وفق الصورة والمدينة والسلالة.', instantWaiting: 'اختر صورة لبدء معاينة سريعة.', previewEmpty: 'ستظهر معاينة الصورة هنا', previewLoading: 'جارٍ فحص التطابقات...', previewUnavailable: 'المعاينة الحية تحتاج endpoint للمعاينة في الخادم.', noMatchesYet: 'لا توجد تطابقات قوية حاليًا.', recentReports: 'تقارير ذات صلة', communityTrustTitle: 'الثقة والمجتمع', trust1: 'قنوات اتصال محمية', trust1t: 'يمكن حماية التواصل بين المالك والواجد.', trust2: 'تحقق من الملكية', trust2t: 'سؤال خاص وعلامة مميزة يقللان الاحتيال.', trust3: 'شبكة متطوعين', trust3t: 'متطوعو الأحياء يمكنهم تلقي تنبيهات قريبة.', municipalDraft: 'مسودة 106', reportSaved: 'تم حفظ البلاغ.', volunteerSaved: 'تم حفظ بيانات المتطوع.', installApp: 'ثبّت التطبيق للوصول السريع', scanningFace: 'جارٍ فحص الوجه...', shelterSaved: 'تم حفظ مسح الملجأ.', loading: 'جارٍ التحميل...', none: 'لا توجد بيانات بعد.', sourcePlatform: 'المنصة', radiusKm: 'نطاق كم', shelterName: 'اسم الملجأ / السلطة', matchesTitle: 'بلاغات نشطة', volunteerTitle: 'متطوع الحي', shelterTitle: 'مسح استقبال الملجأ', folderSearchMode: 'وضع البحث من المجلد', staticSearchReady: 'يجري الفحص مقابل الصور التي أضفتها إلى المجلد...', staticLibraryEmpty: 'لم تُضَف صور بعد إلى مكتبة البحث. ضعي الملفات في library/pets وحدّثي data/pets.json.', staticSearchOnly: 'تم البحث فقط داخل الصور التي أضفتها إلى المجلد. الملف الذي رفعه الزائر لم يُحفَظ على خادم.', staticSearchSaved: 'انتهى البحث داخل المجلد بنجاح.'
     }
   };
 
@@ -224,6 +229,153 @@
     writeLocalReports(items.slice(0, 100));
     return item;
   }
+
+  const STATIC_LIBRARY_URL = 'data/pets.json';
+  let staticLibraryPromise = null;
+  const staticImageHashCache = new Map();
+
+  function staticLibraryPath() {
+    return relativePrefix() + STATIC_LIBRARY_URL;
+  }
+
+  async function loadStaticLibrary() {
+    if (!staticLibraryPromise) {
+      staticLibraryPromise = fetch(staticLibraryPath(), { cache: 'no-store' })
+        .then(res => res.ok ? res.json() : [])
+        .then(items => Array.isArray(items) ? items.map((item, index) => normalizeStaticItem(item, index)) : [])
+        .catch(() => []);
+    }
+    return staticLibraryPromise;
+  }
+
+  function normalizeStaticItem(item, index) {
+    const image = String(item.image || item.image_url || '').trim();
+    const normalizedImage = image && !/^https?:\/\//i.test(image) && !image.startsWith('data:') ? relativePrefix() + image.replace(/^\/+/, '') : image;
+    return {
+      id: item.id || `static-${index + 1}`,
+      lost_pet_id: item.id || `static-${index + 1}`,
+      name: item.name || item.pet_name || 'Pet',
+      city: item.city || '',
+      animal_type: item.animal_type || 'dog',
+      breed: item.breed || '',
+      color: item.color || '',
+      unique_markings: item.unique_markings || item.markings || '',
+      private_marker_prompt: item.private_marker_prompt || '',
+      reason: item.reason || '',
+      tag_overlap: Array.isArray(item.tags) ? item.tags : [],
+      image_url: normalizedImage,
+      report_type: item.report_type || item.type || 'lost',
+      microchip_number: item.microchip_number || '',
+      searchable: image ? item.searchable !== false : false
+    };
+  }
+
+  function normalizeCompareValue(value) {
+    return String(value || '').trim().toLowerCase();
+  }
+
+  async function imageElementFromSource(source) {
+    if (typeof source === 'string') {
+      if (typeof createImageBitmap === 'function') {
+        const res = await fetch(source, { cache: 'force-cache' });
+        if (!res.ok) throw new Error('Image fetch failed');
+        const blob = await res.blob();
+        return await createImageBitmap(blob);
+      }
+      return await new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error('Image load failed'));
+        img.src = source;
+      });
+    }
+    if (typeof createImageBitmap === 'function' && source instanceof Blob) {
+      return await createImageBitmap(source);
+    }
+    return await new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error('Image load failed'));
+      img.src = URL.createObjectURL(source);
+    });
+  }
+
+  async function computeAverageHash(source) {
+    const cacheKey = typeof source === 'string' ? source : null;
+    if (cacheKey && staticImageHashCache.has(cacheKey)) return staticImageHashCache.get(cacheKey);
+    const img = await imageElementFromSource(source);
+    const size = 16;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0, size, size);
+    const { data } = ctx.getImageData(0, 0, size, size);
+    const gray = [];
+    let sum = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      const value = Math.round(data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
+      gray.push(value);
+      sum += value;
+    }
+    const avg = sum / gray.length;
+    const hash = gray.map(v => v >= avg ? '1' : '0').join('');
+    if (cacheKey) staticImageHashCache.set(cacheKey, hash);
+    return hash;
+  }
+
+  function hashSimilarity(a, b) {
+    if (!a || !b || a.length !== b.length) return 0;
+    let same = 0;
+    for (let i = 0; i < a.length; i += 1) if (a[i] === b[i]) same += 1;
+    return same / a.length;
+  }
+
+  function metadataBoost(query, item) {
+    let score = 0;
+    const queryCity = normalizeCompareValue(query.city);
+    const itemCity = normalizeCompareValue(item.city);
+    const queryAnimal = normalizeCompareValue(query.animal_type);
+    const itemAnimal = normalizeCompareValue(item.animal_type);
+    const queryBreed = normalizeCompareValue(query.breed);
+    const itemBreed = normalizeCompareValue(item.breed);
+    const queryColor = normalizeCompareValue(query.color);
+    const itemColor = normalizeCompareValue(item.color);
+    const queryChip = normalizeCompareValue(query.microchip_number);
+    const itemChip = normalizeCompareValue(item.microchip_number);
+    if (queryChip && itemChip && queryChip === itemChip) return 1;
+    if (queryCity && itemCity && queryCity === itemCity) score += 0.08;
+    if (queryAnimal && itemAnimal && queryAnimal === itemAnimal) score += 0.06;
+    if (queryBreed && itemBreed && queryBreed === itemBreed) score += 0.1;
+    if (queryColor && itemColor && queryColor === itemColor) score += 0.04;
+    return score;
+  }
+
+  async function searchStaticLibrary(query) {
+    const library = await loadStaticLibrary();
+    const candidates = library.filter(item => item.searchable && item.image_url && (!query.report_type || normalizeCompareValue(item.report_type) === normalizeCompareValue(query.report_type)));
+    if (!candidates.length) return [];
+    const fileHash = query.file ? await computeAverageHash(query.file) : null;
+    const results = [];
+    for (const item of candidates) {
+      let score = metadataBoost(query, item);
+      if (fileHash) {
+        try {
+          const itemHash = await computeAverageHash(item.image_url);
+          score += hashSimilarity(fileHash, itemHash) * 0.86;
+        } catch {
+          score += 0;
+        }
+      }
+      results.push({
+        ...item,
+        reason: item.reason || t('folderSearchMode'),
+        score: Math.max(0, Math.min(99, Math.round(score * 100)))
+      });
+    }
+    return results.sort((a, b) => b.score - a.score).slice(0, query.limit || 6);
+  }
+
   function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c])); }
   function currentLang() { return localStorage.getItem('petconnect_lang') || 'he'; }
   function setLang(lang) { localStorage.setItem('petconnect_lang', TRANSLATIONS[lang] ? lang : 'he'); applyTranslations(); }
@@ -539,12 +691,33 @@
     if (!apiReady()) {
       const localType = form.id === 'lost-form' ? 'lost' : form.id === 'found-form' ? 'found' : '';
       if (!localType) { setNotice(note, 'warn', t('apiWarning')); return; }
-      showLoading('loading');
+      showLoading(form.id === 'found-form' ? 'scanningFace' : 'loading');
       try {
         if (!new FormData(form).get('latitude') || !new FormData(form).get('longitude')) await captureLocationForForm(form, false);
         const saved = await saveReportLocally(form, localType);
-        setNotice(note, 'ok', `${successMsg} • נשמר מקומית במכשיר הזה בלבד`);
-        renderApiResult(form, saved.matches ? saved : { local_saved: true, item: saved });
+        if (form.id === 'found-form') {
+          const imageInput = form.querySelector('input[name="image"]');
+          const file = getPreparedFile(imageInput) || pendingCapturedImage || imageInput?.files?.[0] || null;
+          const matches = file ? await searchStaticLibrary({
+            file,
+            city: form.querySelector('[name="city"]')?.value,
+            animal_type: form.querySelector('[name="animal_type"]')?.value,
+            breed: form.querySelector('[name="breed"]')?.value,
+            color: form.querySelector('[name="color"]')?.value,
+            microchip_number: form.querySelector('[name="microchip_number"]')?.value,
+            report_type: 'lost',
+            limit: 6
+          }) : [];
+          const liveStatus = document.querySelector('[data-live-match-status]');
+          const liveBox = document.querySelector('[data-live-matches]');
+          if (liveStatus) liveStatus.textContent = matches.length ? `${t('possibleMatches')} · ${matches.length}` : t('staticLibraryEmpty');
+          if (liveBox) liveBox.innerHTML = matches.length ? matches.map(renderMatchCard).join('') : `<div class="empty">${escapeHtml(t('staticLibraryEmpty'))}</div>`;
+          setNotice(note, 'ok', matches.length ? `${t('staticSearchSaved')} • ${matches.length} ${t('possibleMatches')}` : t('staticSearchSaved'));
+          renderApiResult(form, { local_saved: true, item: saved, matches, static_search_only: true });
+        } else {
+          setNotice(note, 'ok', `${successMsg} • נשמר מקומית במכשיר הזה בלבד`);
+          renderApiResult(form, { local_saved: true, item: saved });
+        }
       } catch (err) {
         setNotice(note, 'err', err.message || 'Local save failed');
       } finally {
@@ -636,7 +809,7 @@
     if (!out) return;
     const parts = [];
     if (data.local_saved && data.item) {
-      parts.push(`<div class="result-card"><strong>${escapeHtml(t('reportSaved'))}</strong><div class="small">נשמר מקומית בדפדפן הזה בלבד, כי עדיין לא הוגדר backend ב‑config.js.</div><div class="small">${escapeHtml(data.item.name || '')} ${data.item.city ? '· ' + escapeHtml(data.item.city) : ''}</div></div>`);
+      parts.push(`<div class="result-card"><strong>${escapeHtml(t('reportSaved'))}</strong><div class="small">${escapeHtml(data.static_search_only ? t('staticSearchOnly') : 'נשמר מקומית בדפדפן הזה בלבד, כי עדיין לא הוגדר backend ב‑config.js.')}</div><div class="small">${escapeHtml(data.item.name || '')} ${data.item.city ? '· ' + escapeHtml(data.item.city) : ''}</div></div>`);
     }
     if (Array.isArray(data.matches)) {
       const cards = data.matches.length ? data.matches.map(renderMatchCard).join('') : `<div class="result-card">${escapeHtml(t('noMatchesYet'))}</div>`;
@@ -663,7 +836,28 @@
     const file = getPreparedFile(imageInput) || pendingCapturedImage;
     const video = form.querySelector('input[name="video"]')?.files?.[0];
     if (!file && !video) { status.className = 'empty'; status.textContent = t('instantWaiting'); box.innerHTML = ''; return; }
-    if (!apiReady()) { status.className = 'empty'; status.textContent = t('previewUnavailable'); box.innerHTML = ''; return; }
+    if (!apiReady()) {
+      if (!file) { status.className = 'empty'; status.textContent = t('instantWaiting'); box.innerHTML = ''; return; }
+      status.className = 'empty'; status.textContent = t('staticSearchReady');
+      try {
+        const matches = await searchStaticLibrary({
+          file,
+          city: String(fd.get('city') || ''),
+          animal_type: String(fd.get('animal_type') || ''),
+          breed: String(fd.get('breed') || ''),
+          color: String(fd.get('color') || ''),
+          microchip_number: String(fd.get('microchip_number') || ''),
+          report_type: 'lost',
+          limit: 4
+        });
+        status.textContent = matches.length ? `${t('possibleMatches')} · ${matches.length}` : t('staticLibraryEmpty');
+        box.innerHTML = matches.length ? matches.map(renderMatchCard).join('') : `<div class="empty">${escapeHtml(t('staticLibraryEmpty'))}</div>`;
+      } catch (err) {
+        status.textContent = err.message || t('staticLibraryEmpty');
+        box.innerHTML = '';
+      }
+      return;
+    }
     status.className = 'empty'; status.textContent = t('previewLoading');
     if (file) fd.set('image', file, file.name);
     try {
@@ -737,7 +931,8 @@
   async function fetchRecentReports() {
     if (!apiReady()) {
       const localLost = readLocalReports().filter(item => item.report_type === 'lost');
-      return [...localLost, ...FALLBACK_RECENT];
+      const staticLost = (await loadStaticLibrary()).filter(item => normalizeCompareValue(item.report_type) === 'lost');
+      return [...localLost, ...staticLost, ...FALLBACK_RECENT];
     }
     try {
       const res = await fetch(apiBase() + '/api/lost-pets');
@@ -791,22 +986,28 @@
   async function loadMatches() {
     const list = document.getElementById('matches-list');
     if (!list) return;
-    if (!apiReady()) {
-      const params = new URLSearchParams(location.search);
-      const q = params.get('q') || '';
-      let items = readLocalReports().filter(item => item.report_type === 'lost');
-      if (q) items = items.filter(item => JSON.stringify(item).toLowerCase().includes(q.toLowerCase()));
-      if (!items.length) { list.innerHTML = `<div class="empty">${escapeHtml(t('apiWarning'))}</div>`; return; }
-      list.innerHTML = items.map(item => `
-        <div class="result-card">
-          <div class="match-head"><strong>${escapeHtml(item.name || 'Pet')}</strong><span class="status-pill">local demo</span></div>
-          <div class="small">${escapeHtml(item.animal_type || '')} · ${escapeHtml(item.breed || '')} · ${escapeHtml(item.city || '')}</div>
-          <div class="small">${escapeHtml(item.color || '')} · ${escapeHtml(item.last_seen_location || '')}</div>
-        </div>`).join('');
-      return;
-    }
     list.innerHTML = `<div class="empty">${escapeHtml(t('loading'))}</div>`;
     const params = new URLSearchParams(location.search);
+    if (!apiReady()) {
+      const q = params.get('q') || '';
+      const city = document.body.dataset.citySlug || params.get('city') || '';
+      const focusId = params.get('focus');
+      const staticLost = (await loadStaticLibrary()).filter(item => normalizeCompareValue(item.report_type) === 'lost');
+      let items = [...readLocalReports().filter(item => item.report_type === 'lost'), ...staticLost];
+      if (city) items = items.filter(item => normalizeCompareValue(item.city).includes(normalizeCompareValue(city)) || normalizeCompareValue(item.city) === normalizeCompareValue(city));
+      if (q) items = items.filter(item => JSON.stringify(item).toLowerCase().includes(q.toLowerCase()));
+      if (focusId) items = items.sort((a, b) => String(a.id) === focusId ? -1 : String(b.id) === focusId ? 1 : 0);
+      if (!items.length) { list.innerHTML = `<div class="empty">${escapeHtml(t('staticLibraryEmpty'))}</div>`; return; }
+      list.innerHTML = items.map(item => `
+        <div class="result-card ${String(item.id) === focusId ? 'focus-card' : ''}">
+          <div class="match-head"><strong>${escapeHtml(item.name || 'Pet')}</strong><span class="status-pill">${escapeHtml(item.status || item.report_type || 'static')}</span></div>
+          <div class="small">${escapeHtml(item.animal_type || '')} · ${escapeHtml(item.breed || '')} · ${escapeHtml(item.city || '')}</div>
+          <div class="small">${escapeHtml(item.color || '')} · ${escapeHtml(item.unique_markings || item.last_seen_location || '')}</div>
+          <div class="small">${escapeHtml(item.last_seen_location || '')}</div>
+        </div>`).join('');
+      if (window._matchesMap) items.forEach(item => { if (item.latitude && item.longitude) L.marker([item.latitude, item.longitude]).addTo(window._matchesMap).bindPopup(`<strong>${escapeHtml(item.name || 'Pet')}</strong><br>${escapeHtml(item.city || '')}`); });
+      return;
+    }
     const city = document.body.dataset.citySlug || params.get('city') || '';
     const q = params.get('q') || '';
     try {
